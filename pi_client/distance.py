@@ -70,8 +70,3 @@ class Distance:
             self.client.loop_stop()
             self.client.disconnect()
             gpio.cleanup()
-
-
-if __name__ == "__main__":
-    distance = Distance()
-    distance.run()

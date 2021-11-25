@@ -51,8 +51,3 @@ class PIR:
             self.client.loop_stop()
             self.client.disconnect()
             gpio.cleanup()
-
-
-if __name__ == "__main__":
-    sensor_pir = PIR()
-    sensor_pir.run()

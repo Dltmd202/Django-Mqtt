@@ -64,8 +64,3 @@ class Temp_Hum:
             self.client.loop_stop()
             self.client.disconnect()
             gpio.cleanup()
-
-
-if __name__ == "__main__":
-    TH = Temp_Hum()
-    TH.run()

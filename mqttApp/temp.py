@@ -50,6 +50,7 @@ class Temp_Hum:
         self.client.loop_start()
         try:
             while True:
+                self.get_TH()
                 msg = {
                     "temperature": self.temperature,
                     "humidity": self.humidity

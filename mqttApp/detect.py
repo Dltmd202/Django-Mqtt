@@ -12,7 +12,7 @@ class PIR:
 
     @property
     def client(self):
-        if self.client:
+        if self._client:
             return self._client
         else:
             client = mqtt.Client()
@@ -30,7 +30,7 @@ class PIR:
     def init_gpio(self):
         gpio.setmode(gpio.BCM)
         gpio.cleanup()
-        gpio.setup(self.pir_Pin, gpio.IN)
+        gpio.setup(self.pir_pin, gpio.IN)
 
     def run(self):
         self.init_gpio()

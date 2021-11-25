@@ -1,3 +1,5 @@
+import os
+
 from detect import PIR
 from distance import Distance
 from temp import Temp_Hum
@@ -29,5 +31,5 @@ class Client:
 
 
 if __name__ == "__main__":
-    client = Client()
+    client = Client(os.environ.get("BROCKER", "localhost"))
     client.run()

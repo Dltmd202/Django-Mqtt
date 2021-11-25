@@ -2,13 +2,21 @@ from detect import PIR
 from distance import Distance
 from temp import Temp_Hum
 
-import threading
+import multiprocessing
+
+
+class Client:
+    def __init__(self, ip="localhost"):
+        self.pir = PIR(ip)
+        self.dist = Distance(ip)
+        self.temp = Temp_Hum(ip)
+        self.sensors = [self.pir, self.dist, self.temp]
+
+    def run(self):
+        for sensor in self.sensors:
+            p = multiprocessing.Process(target=sensor.run())
+
 
 if __name__ == "__main__":
-    pir = PIR("localhost")
-    dist = Distance("localhost")
-    temp = Temp_Hum("localhost")
-
-    pir_th = threading.Thread(target=pir.run)
-    dist_th = threading.Thread(target=dist.run)
-    temp_th = threading.Thread(target=temp.run)
+    client = Client()
+    client.run()

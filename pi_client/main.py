@@ -15,7 +15,7 @@ class Client:
 
     def run(self):
         for sensor in self.sensors:
-            p = multiprocessing.Process(target=sensor.run())
+            p = multiprocessing.Process(target=sensor.run)
             self.processingQ.append(p)
             p.start()
             print(p, "start")

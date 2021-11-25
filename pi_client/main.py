@@ -15,6 +15,7 @@ class Client:
     def run(self):
         for sensor in self.sensors:
             p = multiprocessing.Process(target=sensor.run())
+            p.start()
 
 
 if __name__ == "__main__":

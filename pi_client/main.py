@@ -9,6 +9,7 @@ import multiprocessing
 
 class Client:
     def __init__(self, ip="localhost"):
+        self.ip = ip
         self.pir = PIR(ip)
         self.dist = Distance(ip)
         self.temp = Temp_Hum(ip)
@@ -16,6 +17,7 @@ class Client:
         self.processingQ = []
 
     def run(self):
+        print(self.ip)
         for sensor in self.sensors:
             p = multiprocessing.Process(target=sensor.run)
             self.processingQ.append(p)

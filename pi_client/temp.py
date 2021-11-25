@@ -6,6 +6,7 @@ import dht11
 import time
 import datetime
 
+
 class Temp_Hum:
     def __init__(self, IP="localhost", temperature=0, humidity=0):
         self.IP = IP

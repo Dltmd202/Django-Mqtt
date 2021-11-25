@@ -3,6 +3,7 @@ import paho.mqtt.client as mqtt
 import RPi.GPIO as gpio
 import json
 
+
 class PIR:
     def __init__(self, detected=False, IP="localhost"):
         self._client = None

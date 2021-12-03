@@ -56,7 +56,7 @@ class ServerApplication:
         pass
 
     def run(self):
-        self.client.connect('localhost', port=1884)
+        self.client.connect('localhost')
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:

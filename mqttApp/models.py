@@ -2,21 +2,24 @@ from django.db import models
 
 
 # Create your models here.
-class temp(models.Model):
-    time = models.DateTimeField(auto_now=True)
+class Lock(models.Model):
+    degree = models.FloatField()
+
+
+class Window(models.Model):
+    degree = models.FloatField()
+
+
+class Information(models.Model):
     temp = models.FloatField()
     humidity = models.FloatField()
-
-
-class distance(models.Model):
-    time = models.DateTimeField(auto_now=True)
     distance = models.FloatField()
-
-
-class detect(models.Model):
     time = models.DateTimeField(auto_now=True)
     is_human = models.BooleanField(default=False)
 
 
-class moter(models.Model):
-    degree = models.FloatField()
+class Home(models.Model):
+    time = models.DateTimeField(auto_now=True)
+    information = models.ForeignKey(Information, on_delete=models.CASCADE)
+    lock = models.OneToOneField(Lock, on_delete=models.CASCADE)
+    window = models.OneToOneField(Window, on_delete=models.CASCADE)

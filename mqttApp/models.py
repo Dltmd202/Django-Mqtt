@@ -11,11 +11,10 @@ class Window(models.Model):
 
 
 class Information(models.Model):
-    temp = models.FloatField()
-    humidity = models.FloatField()
     distance = models.FloatField()
-    time = models.DateTimeField(auto_now=True)
-    is_human = models.BooleanField(default=False)
+    temperature = models.FloatField()
+    humidity = models.FloatField()
+    is_person = models.BooleanField(default=False)
 
 
 class Home(models.Model):

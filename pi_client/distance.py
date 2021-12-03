@@ -36,7 +36,6 @@ class Distance:
         gpio.setup(self.trig_pin, gpio.OUT)                # 초음파센서 trig핀 설정
         gpio.setup(self.echo_pin, gpio.IN)                 # 초음파센서 echo핀 설정
 
-
     def get_distance(self):                                # 초음파 센서 거리 구하는 함수
         gpio.output(self.trig_pin, False)
         time.sleep(1)

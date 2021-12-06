@@ -3,6 +3,7 @@ import os
 from detect import PIR
 from distance import Distance
 from temp import Temp_Hum
+from broker import ServerApplication
 
 import multiprocessing
 
@@ -13,7 +14,8 @@ class Client:
         self.pir = PIR(ip)
         self.dist = Distance(ip)
         self.temp = Temp_Hum(ip)
-        self.sensors = [self.pir, self.dist, self.temp]
+        self.broker = ServerApplication()
+        self.sensors = [self.pir, self.dist, self.temp, self.broker]
         self.processingQ = []
 
     def run(self):

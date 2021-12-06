@@ -1,5 +1,5 @@
-from .broker import ServerApplication
-
-service = ServerApplication()
-service.run()
-
+# from .broker import ServerApplication
+#
+# service = ServerApplication()
+# service.run()
+#

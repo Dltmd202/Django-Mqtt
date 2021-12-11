@@ -6,7 +6,9 @@ from temp import Temp_Hum
 from broker import ServerApplication
 
 import multiprocessing
+from dotenv import load_dotenv
 
+load_dotenv(verbose=True)
 
 class Client:
     def __init__(self, ip="localhost"):

@@ -40,7 +40,8 @@ class ServerApplication:
                 self.rainParser(msg)
             self.motorControl()
             headers = {
-                "Accept": "application/json"
+                "Content-Type": "application/json; charset=utf-8",
+                "Accept": "application/json",
             }
             data = self.get_data()
             print(f"publising {data}")

@@ -1,5 +1,9 @@
-# from .broker import ServerApplication
-#
-# service = ServerApplication()
-# service.run()
-#
+from .broker import ServerApplication
+import threading
+
+print("hi")
+
+service = ServerApplication()
+t = threading.Thread(target=service.run)
+t.start()
+

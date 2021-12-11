@@ -35,5 +35,5 @@ class Client:
 
 
 if __name__ == "__main__":
-    client = Client(os.environ.get("BROCKER", "localhost"))
+    client = Client(os.environ.get("PI", "localhost"))
     client.run()

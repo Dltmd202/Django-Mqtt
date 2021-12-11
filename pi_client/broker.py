@@ -7,7 +7,7 @@ import requests
 
 class ServerApplication:
     def __init__(self):
-        self.ip = os.environ.get("BROCKER", "localhost")
+        self.ip = os.environ.get("PI", "localhost")
         self.client = self.getClient()
         self.status = None
         self.distance = None
@@ -26,6 +26,7 @@ class ServerApplication:
             client.subscribe("sensor/detect")
             client.subscribe("sensor/rain")
             client.subscribe("control/motor")
+            client.subscribe("sensor/user")
 
         def on_message(client, userdata, msg):
             print(f"[{msg.topic}] Get Message: {msg.payload}")
@@ -38,8 +39,9 @@ class ServerApplication:
             elif msg.topic == 'sensor/rain':
                 self.rainParser(msg)
             self.motorControl()
-            res = requests.post(
-                "http://" + os.environ.get("BROCKER", "localhost") + "/8000",
+            res = requests.patch(
+                "http://" + os.environ.get("BROCKER", "localhost") + ":8000" + \
+                    "window/inf/1/?format=json",
                 json.dumps(self.get_data())
             )
 
@@ -82,7 +84,8 @@ class ServerApplication:
             "distance": self.distance,
             "is_person": self.is_person,
             "temperature": self.temp,
-            "humidity": self.hum
+            "humidity": self.hum,
+            "rain": self.rain,
         }
         return json.dumps(data)
 

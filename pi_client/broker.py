@@ -39,6 +39,9 @@ class ServerApplication:
             elif msg.topic == 'sensor/rain':
                 self.rainParser(msg)
             self.motorControl()
+            headers = {
+                "Accept": "application/json"
+            }
             res = requests.post(
                 "http://" + os.environ.get("BROCKER", "localhost") + ":8000/" + \
                     "window/inf/1/?format=json",

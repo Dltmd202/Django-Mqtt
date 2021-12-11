@@ -5,11 +5,11 @@ import json
 
 
 class WaterSensor:
-    def __init__(self, level=0, IP="localhost"):
+    def __init__(self, ip="localhost"):
         self._client = None
         self.spi = spidev.SpiDev()
-        self.rainlevel = level
-        self.IP = IP
+        self.rainlevel = 0
+        self.ip = ip
         self.channel = 0
 
     @property
@@ -41,7 +41,7 @@ class WaterSensor:
 
     def run(self):
         self.init_pin()
-        self.client.connect(self.IP)
+        self.client.connect(self.ip)
         self.client.loop_start()
         try:
             while True:

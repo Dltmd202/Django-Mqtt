@@ -5,10 +5,10 @@ import json
 
 
 class PIR:
-    def __init__(self, detected=False, IP="localhost"):
+    def __init__(self, ip="localhost"):
         self._client = None
-        self.detected = detected  # 외부 사람감지
-        self.IP = IP
+        self.detected = False  # 외부 사람감지
+        self.ip = ip
         self.pir_pin = 17
 
     @property
@@ -35,7 +35,7 @@ class PIR:
 
     def run(self):
         self.init_gpio()
-        self.client.connect(self.IP)
+        self.client.connect(self.ip)
         self.client.loop_start()
         try:
             while True:

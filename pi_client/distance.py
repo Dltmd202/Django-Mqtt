@@ -5,9 +5,9 @@ import json
 
 
 class Distance:
-    def __init__(self, distance=0, IP="localhost"):
-            self.distance = distance
-            self.IP = IP
+    def __init__(self, ip="localhost"):
+            self.distance = 0
+            self.ip = ip
             self._client = None
             self.trig_pin = 20       # 초음파 센서 trig gpio핀 값
             self.echo_pin = 21       # 초음파 센서 echo gpio핀 값
@@ -53,7 +53,7 @@ class Distance:
 
     def run(self):
         self.init_gpio()
-        self.client.connect(self.IP)                   # 로컬로 접속
+        self.client.connect(self.ip)                   # 로컬로 접속
         self.client.loop_start()
         try:
             while True:

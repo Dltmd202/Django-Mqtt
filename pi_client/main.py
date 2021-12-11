@@ -16,7 +16,7 @@ class Client:
         self.pir = PIR(ip)
         self.dist = Distance(ip)
         self.temp = Temp_Hum(ip)
-        self.broker = ServerApplication()
+        self.broker = ServerApplication(ip)
         self.sensors = [self.broker, self.pir, self.dist, self.temp]
         self.processingQ = []
 

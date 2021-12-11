@@ -6,8 +6,8 @@ import requests
 
 
 class ServerApplication:
-    def __init__(self):
-        self.ip = os.environ.get("PI", "localhost")
+    def __init__(self, ip):
+        self.ip = os.environ.get("PI", ip)
         self.client = self.getClient()
         self.status = None
         self.distance = None
@@ -39,7 +39,7 @@ class ServerApplication:
             elif msg.topic == 'sensor/rain':
                 self.rainParser(msg)
             self.motorControl()
-            res = requests.patch(
+            res = requests.post(
                 "http://" + os.environ.get("BROCKER", "localhost") + ":8000/" + \
                     "window/inf/1/?format=json",
                 json.dumps(self.get_data())
@@ -70,7 +70,7 @@ class ServerApplication:
         pass
 
     def run(self):
-        self.client.connect('localhost')
+        self.client.connect(self.ip)
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:

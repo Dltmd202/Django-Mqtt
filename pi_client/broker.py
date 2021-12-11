@@ -46,11 +46,10 @@ class ServerApplication:
             data = self.get_data()
             print(f"publising {data}")
             res = requests.patch(
-                "http://172.20.10.7:8000/window/inf/1",
+                "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
                 data=json.dumps(data)
             )
-            print(res.text)
 
         client.on_connect = on_connect
         client.on_message = on_message

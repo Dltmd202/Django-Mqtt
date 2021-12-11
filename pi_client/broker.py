@@ -42,10 +42,12 @@ class ServerApplication:
             headers = {
                 "Accept": "application/json"
             }
+            data = self.get_data()
+            print(f"publising {data}")
             res = requests.post(
                 "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
-                data=json.dumps(self.get_data())
+                data=json.dumps(data)
             )
 
         client.on_connect = on_connect
@@ -88,7 +90,7 @@ class ServerApplication:
             "is_person": self.is_person,
             "temperature": self.temp,
             "humidity": self.hum,
-            "rain": self.rain,
+            "is_rain": self.rain,
         }
         return json.dumps(data)
 

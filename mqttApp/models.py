@@ -15,6 +15,7 @@ class Information(models.Model):
     temperature = models.FloatField()
     humidity = models.FloatField()
     is_person = models.BooleanField(default=False)
+    is_rain = models.BooleanField(default=False)
 
 
 class Home(models.Model):

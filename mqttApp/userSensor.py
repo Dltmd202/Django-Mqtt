@@ -5,7 +5,7 @@ import os
 
 
 class UserSensor:
-    def __init__(self, IP=os.environ.get("PI", "localhost")):
+    def __init__(self, IP="172.20.10.8"):
         self._client = None
         self.IP = IP
 

@@ -45,7 +45,8 @@ class ServerApplication:
             res = requests.post(
                 "http://" + os.environ.get("BROCKER", "localhost") + ":8000/" + \
                     "window/inf/1/?format=json",
-                json.dumps(self.get_data())
+                headers = headers,
+                data = json.dumps(self.get_data())
             )
 
         client.on_connect = on_connect

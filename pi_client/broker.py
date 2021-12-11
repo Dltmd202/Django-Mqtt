@@ -86,10 +86,11 @@ class ServerApplication:
 
     def get_data(self):
         data = {
+            "id": 1,
             "distance": self.distance,
-            "is_person": self.is_person,
             "temperature": self.temp,
             "humidity": self.hum,
+            "is_person": self.is_person,
             "is_rain": self.rain,
         }
         return json.dumps(data)

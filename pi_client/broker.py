@@ -43,7 +43,7 @@ class ServerApplication:
                 "Accept": "application/json"
             }
             res = requests.post(
-                "http://172,20.10.7:8000/window/inf/1/?format=json",
+                "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
                 data=json.dumps(self.get_data())
             )

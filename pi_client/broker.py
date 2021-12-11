@@ -46,10 +46,14 @@ class ServerApplication:
             data = self.get_data()
             print(f"publising {data}")
             res = requests.put(
-                "http://172.20.10.7:8000/window/inf/1/?format=json/",
+                "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
                 data=json.dumps(data)
             )
+            res = requests.get(
+                "http://172.20.10.7:8000/window/inf/1/?format=json"
+            )
+            print(res.status_code)
 
         client.on_connect = on_connect
         client.on_message = on_message

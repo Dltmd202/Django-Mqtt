@@ -91,5 +91,5 @@ class ServerApplication:
 
 
 if __name__ == '__main__':
-    service = ServerApplication()
+    service = ServerApplication(os.environ.get("PI", "localhost"))
     service.run()

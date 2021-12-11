@@ -24,7 +24,7 @@ class Temp_Hum:
             client = mqtt.Client()
 
             def on_connect(client, userdata, flags, rc):
-                print("Connected Ultrasonic sensor" + str(rc))
+                print("Connected Temp/Hum sensor" + str(rc))
 
             def on_publish(client, userdata, mid):
                 msg_id = mid

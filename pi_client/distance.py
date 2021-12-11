@@ -61,7 +61,7 @@ class Distance:
                 msg = {
                     "distance": self.distance              # 송신할 거리값 메시지
                 }
-                self.client.publish("sensor/ultrasonic", json.dumps(msg))  # json형식으로 송신
+                self.client.publish("sensor/distance", json.dumps(msg))  # json형식으로 송신
                 print(f"publishing : {msg}")    # 송신한 메시지 출력
                 time.sleep(1)
         except KeyboardInterrupt:

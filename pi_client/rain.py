@@ -1,15 +1,16 @@
 import time
+import spidev
 import paho.mqtt.client as mqtt
-import RPi.GPIO as gpio
 import json
 
 
-class PIR:
-    def __init__(self, detected=False, IP="localhost"):
+class WaterSensor:
+    def __init__(self, level=0, IP="localhost"):
         self._client = None
-        self.detected = detected  # 외부 사람감지
+        self.spi = spidev.SpiDev()
+        self.rainlevel = level
         self.IP = IP
-        self.pir_pin = 17
+        self.channel = 0
 
     @property
     def client(self):
@@ -17,8 +18,9 @@ class PIR:
             return self._client
         else:
             client = mqtt.Client()
+
             def on_connect(client, userdata, flags, rc):
-                print("Connected PIR Sensor" + str(rc))
+                print("Connected Rain Sensor" + str(rc))
 
             def on_publish(client, userdata, mid):
                 msg_id = mid
@@ -28,26 +30,36 @@ class PIR:
             self._client = client
             return client
 
-    def init_gpio(self):
-        gpio.setmode(gpio.BCM)
-        gpio.cleanup()
-        gpio.setup(self.pir_pin, gpio.IN)
+    def init_pin(self):
+        self.spi.open(0, 0,)
+        self.spi.max_speed_hz = 976000
+
+    def readChannel(self, channel):
+        adc = self.spi.xfer2([1, (8 + channel) << 4, 0])
+        adc_out = ((adc[1] & 3) << 8) + adc[2]
+        return adc_out
 
     def run(self):
-        self.init_gpio()
+        self.init_pin()
         self.client.connect(self.IP)
         self.client.loop_start()
         try:
             while True:
-                self.detected = gpio.input(self.pir_pin)
+                self.rainlevel = self.readChannel(self.channel)
+                print("Reading = %d" % self.rainlevel)
                 msg = {
-                    "detected": self.detected
+                    "rainlevel": self.rainlevel
                 }
-                self.client.publish("sensor/detect", json.dumps(msg))
+                self.client.publish("sensor/rain", json.dumps(msg))
                 print(f"publishing : {msg}")
                 time.sleep(1)
         except KeyboardInterrupt:
             print("Finished")
             self.client.loop_stop()
             self.client.disconnect()
-            gpio.cleanup()
+            self.spi.close()
+
+
+if __name__ == "__main__":
+    watersensor = WaterSensor()
+    watersensor.run()

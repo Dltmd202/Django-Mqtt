@@ -14,6 +14,7 @@ class ServerApplication:
         self.is_person = None
         self.temp = None
         self.hum = None
+        self.rain = None
 
     def getClient(self):
         client = mqtt.Client()
@@ -23,16 +24,19 @@ class ServerApplication:
             client.subscribe("sensor/distance")
             client.subscribe("sensor/temp")
             client.subscribe("sensor/detect")
+            client.subscribe("sensor/rain")
             client.subscribe("control/motor")
 
         def on_message(client, userdata, msg):
             print(f"[{msg.topic}] Get Message: {msg.payload}")
             if msg.topic == 'sensor/distance':
                 self.distanceParser(msg)
-            elif msg.topic == 'sensor/temp':
+            elif msg.topic == 'sensor/temp_hum':
                 self.tempParser(msg)
             elif msg.topic == 'sensor/detect':
-                self.tempParser(msg)
+                self.detectParser(msg)
+            elif msg.topic == 'sensor/rain':
+                self.rainParser(msg)
             self.motorControl()
             res = requests.post(
                 "http://" + os.environ.get("BROCKER", "localhost") + "/8000",
@@ -51,6 +55,14 @@ class ServerApplication:
         temp_msg = json.loads(msg.payload)
         self.temp = float(temp_msg['temperature'])
         self.hum = float(temp_msg['humidity'])
+
+    def detectParser(self, msg):
+        temp_msg = json.loads(msg.payload)
+        self.is_person = int(temp_msg['detected'])
+
+    def rainParser(self, msg):
+        rain_msg = json.loads(msg.payload)
+        self.rain = int(rain_msg['rainlevel'])
 
     def motorControl(self):
         pass

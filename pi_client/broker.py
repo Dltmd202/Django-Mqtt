@@ -40,7 +40,7 @@ class ServerApplication:
                 self.rainParser(msg)
             self.motorControl()
             res = requests.patch(
-                "http://" + os.environ.get("BROCKER", "localhost") + ":8000" + \
+                "http://" + os.environ.get("BROCKER", "localhost") + ":8000/" + \
                     "window/inf/1/?format=json",
                 json.dumps(self.get_data())
             )

@@ -48,7 +48,7 @@ class ServerApplication:
             res = requests.put(
                 "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
-                json=data
+                data=str(data)
             )
             res = requests.get(
                 "http://172.20.10.7:8000/window/inf/1/?format=json"

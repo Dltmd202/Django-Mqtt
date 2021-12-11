@@ -39,7 +39,7 @@ class PIR:
         self.client.loop_start()
         try:
             while True:
-                self.detected = gpio.input(self.pir_pin)
+                self.detected = True if gpio.input(self.pir_pin) else False 
                 msg = {
                     "detected": self.detected
                 }

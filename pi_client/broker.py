@@ -6,8 +6,6 @@ import requests
 
 
 class ServerApplication:
-    TEMP = 30
-    HUM = 40
     def __init__(self, ip):
         self.ip = os.environ.get("PI", ip)
         self.client = self.getClient()
@@ -19,6 +17,8 @@ class ServerApplication:
         self.temp = 0
         self.hum = 0
         self.rain = None
+        self.TEMP_default = 30
+        self.HUMD_default = 40
 
     def getClient(self):
         client = mqtt.Client()
@@ -106,10 +106,10 @@ class ServerApplication:
         if self.rain:
             res["is_open"] = False
             res["is_lock"] = False
-        if TEMP + 10 < self.temp or HUM + 10 < self.hum:
+        if self.TEMP_default + 10 < self.temp or self.HUMD_default + 10 < self.hum:
             res["is_open"] = True
             res["is_lock"] = False
-        if TEMP - 10 > self.temp or HUM - 10 > self.hum:
+        if self.TEMP_default - 10 > self.temp or self.HUMD_default - 10 > self.hum:
             res["is_open"] = False
             res["is_lock"] = False
         else:

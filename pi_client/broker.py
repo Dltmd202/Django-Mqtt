@@ -128,12 +128,12 @@ class ServerApplication:
         }
         if res["is_open"] == True:
             print("msg = ", lockMsg, openMsg)
-            self.client.publish("sensor/lock", json.dumps(lockMsg))
-            self.client.publish("sendor/moter", json.dumps(openMsg))
+            self.client.publish("control/lock", json.dumps(lockMsg))
+            self.client.publish("control/moter", json.dumps(openMsg))
         else:
             print("msg = ", lockMsg, openMsg)
-            self.client.publish("sendor/moter", json.dumps(openMsg))
-            self.client.publish("sensor/lock", json.dumps(lockMsg))
+            self.client.publish("control/moter", json.dumps(openMsg))
+            self.client.publish("control/lock", json.dumps(lockMsg))
 
     def run(self):
         self.client.connect(self.ip)

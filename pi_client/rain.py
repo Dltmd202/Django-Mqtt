@@ -7,7 +7,7 @@ import json
 class Rain:
     def __init__(self, ip="localhost"):
         self._client = None
-        self.spi = spiidev.SpiDev()
+        self.spi = spidev.SpiDev()
         self.rainlevel = 0
         self.ip = ip
         self.channel = 0

@@ -16,6 +16,8 @@ class Information(models.Model):
     humidity = models.FloatField()
     is_person = models.BooleanField(default=False)
     is_rain = models.BooleanField(default=False)
+    is_lock = models.BooleanField(default=False)
+    is_open = models.BooleanField(default=False)
 
 
 class Home(models.Model):

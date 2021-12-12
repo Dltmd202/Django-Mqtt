@@ -9,7 +9,8 @@ class ServerApplication:
     def __init__(self, ip):
         self.ip = os.environ.get("PI", ip)
         self.client = self.getClient()
-        self.status = None
+        self.is_open = None
+        self.is_lock = None
         self.distance = None
         self.is_person = None
         self.temp = None
@@ -97,6 +98,8 @@ class ServerApplication:
             "humidity": self.hum if self.hum else 0.,
             "is_person": self.is_person if self.is_person else False,
             "is_rain": self.rain if self.rain else False,
+            "is_open": self.is_open if self.is_open else False,
+            "is_lock": self.is_lock if self.is_lock else False
         }
         return json.dumps(data)
 

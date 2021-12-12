@@ -7,7 +7,7 @@ import json
 class WaterSensor:
     def __init__(self, ip="localhost"):
         self._client = None
-        self.spi = spidev.SpiDev()
+        self.spi = spiidev.SpiDev()
         self.rainlevel = 0
         self.ip = ip
         self.channel = 0

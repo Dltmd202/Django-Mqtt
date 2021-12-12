@@ -125,9 +125,11 @@ class ServerApplication:
             "is_open": res["is_open"]
         }
         if res["is_open"] == True:
+            print("msg = ", lockMsg, openMsg)
             self.client.publish("sensor/lock", json.dumps(lockMsg))
             self.client.publish("sendor/moter", json.dumps(openMsg))
         else:
+            print("msg = ", lockMsg, openMsg)
             self.client.publish("sendor/moter", json.dumps(openMsg))
             self.client.publish("sensor/lock", json.dumps(lockMsg))
 

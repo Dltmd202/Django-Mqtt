@@ -13,11 +13,11 @@ class ServerApplication:
         self.client = self.getClient()
         self.is_open = None
         self.is_lock = None
-        self.distance = None
+        self.distance = 0
         self.is_person = None
         self.open_order = None
-        self.temp = None
-        self.hum = None
+        self.temp = 0
+        self.hum = 0
         self.rain = None
 
     def getClient(self):

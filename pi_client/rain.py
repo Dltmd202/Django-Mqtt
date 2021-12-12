@@ -4,7 +4,7 @@ import paho.mqtt.client as mqtt
 import json
 
 
-class WaterSensor:
+class Rain:
     def __init__(self, ip="localhost"):
         self._client = None
         self.spi = spiidev.SpiDev()
@@ -61,5 +61,6 @@ class WaterSensor:
 
 
 if __name__ == "__main__":
-    watersensor = WaterSensor()
-    watersensor.run()
+    rain = Rain()
+    rain.run()
+    

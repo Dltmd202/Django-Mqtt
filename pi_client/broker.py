@@ -115,6 +115,8 @@ class ServerApplication:
         else:
             res["is_open"] = True
             res["is_lock"] = False
+        
+        return res
 
     def motorControl(self):
         res = self.defOpenNLock()

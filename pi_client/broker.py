@@ -6,6 +6,8 @@ import requests
 
 
 class ServerApplication:
+    TEMP = 30
+    HUM = 40
     def __init__(self, ip):
         self.ip = os.environ.get("PI", ip)
         self.client = self.getClient()
@@ -13,6 +15,7 @@ class ServerApplication:
         self.is_lock = None
         self.distance = None
         self.is_person = None
+        self.open_order = None
         self.temp = None
         self.hum = None
         self.rain = None
@@ -40,6 +43,8 @@ class ServerApplication:
                 self.detectParser(msg)
             elif msg.topic == 'sensor/rain':
                 self.rainParser(msg)
+            elif msg.topic == 'sensor/user':
+                self.orderParser(msg)
             self.motorControl()
             headers = {
                 "Content-Type": "application/json; charset=utf-8",
@@ -77,9 +82,54 @@ class ServerApplication:
     def rainParser(self, msg):
         rain_msg = json.loads(msg.payload)
         self.rain = int(rain_msg['rainlevel'])
+    
+    def orderParser(self, msg):
+        order_msg = json.loads(msg.payload)
+        self.open_order = order_msg["order"]
+    
+    def defOpenNLock(self):
+        res = {
+            "is_open": False,
+            "is_lock": False
+        }
+        if self.distance > 10:
+            res["is_open"] = True
+            res["is_lock"] = False
+            return res
+        if self.is_person:
+            res["is_open"] = False
+            res["is_lock"] = True
+        if self.open_order:
+            res["is_open"] = False
+            res["is_lock"] = True
+            return res
+        if self.rain:
+            res["is_open"] = False
+            res["is_lock"] = False
+        if TEMP + 10 < self.temp or HUM + 10 < self.hum:
+            res["is_open"] = True
+            res["is_lock"] = False
+        if TEMP - 10 > self.temp or HUM - 10 > self.hum:
+            res["is_open"] = False
+            res["is_lock"] = False
+        else:
+            res["is_open"] = True
+            res["is_lock"] = False
 
     def motorControl(self):
-        pass
+        res = self.defOpenNLock()
+        lockMsg = {
+            "is_lock": res["is_lock"]
+        }
+        openMsg = {
+            "is_open": res["is_open"]
+        }
+        if res["is_open"] == True:
+            self.client.publish("sensor/lock", json.dumps(lockMsg))
+            self.client.publish("sendor/moter", json.dumps(openMsg))
+        else:
+            self.client.publish("sendor/moter", json.dumps(openMsg))
+            self.client.publish("sensor/lock", json.dumps(lockMsg))
 
     def run(self):
         self.client.connect(self.ip)

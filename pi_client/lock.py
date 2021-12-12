@@ -5,11 +5,11 @@ import RPi.GPIO as gpio
 import json
 
 
-class Window:
+class Lock:
     def __init__(self, ip="localhost"):
         self._client = None
         self.ip = ip
-        self.mpin = 18  # servo 모터 핀번호
+        self.mpin = 12  # servo 모터 핀번호
         self.servo_pwm = None
 
     @property
@@ -20,8 +20,8 @@ class Window:
             client = mqtt.Client()
 
             def on_connect(client, userdata, flags, rc):
-                print("Connected Window_Control " + str(rc))
-                client.subscribe("control/moter")  # "control/led" 토픽 구독
+                print("Connected Lock_Control " + str(rc))
+                client.subscribe("control/lock")  # "control/led" 토픽 구독
 
             def on_message(client, userdata, msg):
                 print(f"{msg.topic} : {msg.payload}")  # 수신받은 토픽과 메시지내용 출력
@@ -40,10 +40,10 @@ class Window:
 
     def control_window(self, msg):
         state = json.loads(msg.payload)
-        if state:  # open
-            self.servo_pwm.ChangeDutyCycle(12.5)
+        if state:  # lock
+            self.servo_pwm.ChangeDutyCycle(6.5)
             time.sleep(0.5)
-        else:  # close
+        else:  # unlock
             self.servo_pwm.ChangeDutyCycle(2)
             time.sleep(0.5)
 
@@ -54,11 +54,11 @@ class Window:
             self.client.loop_forever()
         except KeyboardInterrupt:
             print("Finished!")
-            self.client.unsubscribe("control/moter")
+            self.client.unsubscribe("control/lock")
             self.client.disconnect()
             gpio.cleanup()
 
 
 if __name__ == "__main__":
-    Moter_Control = Window()
-    Moter_Control.run()
+    Lock_Control = Lock()
+    Lock_Control.run()

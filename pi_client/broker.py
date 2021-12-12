@@ -27,6 +27,7 @@ class ServerApplication:
             client.subscribe("sensor/detect")
             client.subscribe("sensor/rain")
             client.subscribe("control/motor")
+            client.subscribe("control/lock")
             client.subscribe("sensor/user")
 
         def on_message(client, userdata, msg):

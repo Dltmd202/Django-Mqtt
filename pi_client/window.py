@@ -11,6 +11,7 @@ class Window:
         self.ip = ip
         self.mpin = 12  # servo 모터 핀번호
         self.servo_pwm = None
+        self.pduty = 2
 
     @property
     def client(self):
@@ -46,16 +47,13 @@ class Window:
         else:  # close
             print("window close")
             self.close()
-    
+
     def open(self):
-        for i in range(3, 12, 1):
-            self.servo_pwm.ChangeDutyCycle(i)
-            time.sleep(0.3)
-            
+        self.servo_pwm.ChangeDutyCycle(8)
+
+
     def close(self):
-        for i in range(12, 1, -1):
-            self.servo_pwm.ChangeDutyCycle(i)
-            time.sleep(0.3)
+        self.servo_pwm.ChangeDutyCycle(2)
 
     def run(self):
         self.client.connect(self.ip)

@@ -41,18 +41,16 @@ class Window:
     def control_window(self, msg):
         state = json.loads(msg.payload)
         if state:  # open
-            self.servo_pwm.ChangeDutyCycle(12.5)
-            time.sleep(0.5)
+            self.open()
         else:  # close
-            self.servo_pwm.ChangeDutyCycle(2)
-            time.sleep(0.5)
+            self.close()
     
     def open(self):
         for i in range(3, 12, 1):
             self.servo_pwm.ChangeDutyCycle(i)
             time.sleep(0.3)
             
-    def clsoe(self):
+    def close(self):
         for i in range(12, 1, -1):
             self.servo_pwm.ChangeDutyCycle(i)
             time.sleep(0.3)

@@ -17,8 +17,10 @@ class ServerApplication:
         self.temp = 0
         self.hum = 0
         self.rain = None
-        self.TEMP_default = 30
-        self.HUMD_default = 40
+        self.temp_default = 30
+        self.hum_default = 40
+        self.win_state = False
+        self.lock_state = False
 
     def getClient(self):
         client = mqtt.Client()
@@ -86,19 +88,36 @@ class ServerApplication:
     def orderParser(self, msg):
         order_msg = json.loads(msg.payload)
         self.open_order = order_msg["order"]
-    
+
+    def sendSms(self):
+        sms = {
+            'message': {
+                'to': '01034657095',
+                'from': '01037065337',
+                'text': f'현재 스마트 창문이 침입자를 감지하여 창문을 닫았습니다.'
+            }
+        }
+        res = requests.post(getUrl('/messages/v4/send'),
+                            headers=get_headers(apiKey, apiSecret), json=sms)
+        print(json.dumps(json.loads(res.text), indent=2, ensure_ascii=False))
+   
     def defOpenNLock(self):
         res = {
             "is_open": False,
             "is_lock": False
         }
-        if self.distance > 10:
+        if self.distance > 10 and self.win_state:
             res["is_open"] = True
             res["is_lock"] = False
             return res
+        if self.distance <= 10 and not self.win_state:
+            res["is_open"] = False
+            res["is_lock"] = False
         if self.is_person:
             res["is_open"] = False
             res["is_lock"] = True
+            self.sendSms()
+            return res
         if self.open_order:
             res["is_open"] = False
             res["is_lock"] = True
@@ -106,17 +125,19 @@ class ServerApplication:
         if self.rain:
             res["is_open"] = False
             res["is_lock"] = False
-        if self.TEMP_default + 10 < self.temp or self.HUMD_default + 10 < self.hum:
+            return res
+        if self.temp_default + 10 < self.temp or self.hum_default + 10 < self.hum:
             res["is_open"] = True
             res["is_lock"] = False
-        if self.TEMP_default - 10 > self.temp or self.HUMD_default - 10 > self.hum:
+            return res
+        elif self.temp_default - 10 > self.temp or self.hum_default - 10 > self.hum:
             res["is_open"] = False
             res["is_lock"] = False
+            return res
         else:
             res["is_open"] = True
             res["is_lock"] = False
-        
-        return res
+            return res
 
     def motorControl(self):
         res = self.defOpenNLock()
@@ -126,14 +147,27 @@ class ServerApplication:
         openMsg = {
             "is_open": res["is_open"]
         }
-        if res["is_open"] == True:
+        if res["is_open"] != self.win_state:
+            print("msg = ", openMsg)
+            self.client.publish("control/moter", json.dumps(openMsg))
+            
+        if res["is_lock"] != self.lock_state:
+            if self.win_state:
+                print("wait closing")
+            if not self.win_state:
+                print("msg = ", lockMsgMsg)
+                self.client.publish("control/lock", json.dumps(lockMsg))
+            
+        self.win_state = res["is_open"]
+        self.lock_state = res["is_lock"]
+        '''if res["is_open"] == True:
             print("msg = ", lockMsg, openMsg)
             self.client.publish("control/lock", json.dumps(lockMsg))
             self.client.publish("control/moter", json.dumps(openMsg))
         else:
             print("msg = ", lockMsg, openMsg)
             self.client.publish("control/moter", json.dumps(openMsg))
-            self.client.publish("control/lock", json.dumps(lockMsg))
+            self.client.publish("control/lock", json.dumps(lockMsg))'''
 
     def run(self):
         self.client.connect(self.ip)

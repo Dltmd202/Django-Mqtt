@@ -106,39 +106,48 @@ class ServerApplication:
             "is_lock": False
         }
         if self.distance > 10 and not self.is_open:
+            print("문이 정보와 달라 여는 중!!!!!!!!!!!!!!!")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         if self.distance <= 10 and self.is_open:
+            print("문이 정보와 달라 닫는 중!!!!!!!!!!!!!!!")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.is_person:
+            print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False
             res["is_lock"] = True
             #self.sendSms()
             return res
         if self.open_order:
+            print("명령으로 인해 여는 중###########")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         if not self.open_order:
+            print("명령으로 인해 닫는 중###########")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.rain:
+            print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.temp_default + 10 < self.temp or self.hum_default + 10 < self.hum:
+            print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         elif self.temp_default - 10 > self.temp or self.hum_default - 10 > self.hum:
+            print("사용자 설정 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         else:
+            print("환기 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res

@@ -118,7 +118,7 @@ class ServerApplication:
         if self.is_person:
             res["is_open"] = False
             res["is_lock"] = True
-            self.sendSms()
+            #self.sendSms()
             return res
         if self.open_order:
             res["is_open"] = False

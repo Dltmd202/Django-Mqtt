@@ -5,9 +5,10 @@ import os
 
 
 class UserSensor:
-    def __init__(self, IP="172.20.10.8"):
+    def __init__(self, topic="sensor/user", IP="172.20.10.8"):
         self._client = None
         self.IP = IP
+        self.topic = topic
 
     @property
     def client(self):
@@ -27,14 +28,11 @@ class UserSensor:
             self._client = client
             return client
 
-    def run(self, order):
+    def run(self, msg):
         self.client.connect(self.IP)
         self.client.loop_start()
         try:
-            msg = {
-                "order": order
-            }
-            self.client.publish("sensor/user", json.dumps(msg))
+            self.client.publish(self.topic, json.dumps(msg))
             print(f"publishing : {msg}")
         except KeyboardInterrupt:
             print("Finished")

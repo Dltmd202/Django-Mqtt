@@ -18,6 +18,8 @@ class Information(models.Model):
     is_rain = models.BooleanField(default=False)
     is_lock = models.BooleanField(default=False)
     is_open = models.BooleanField(default=False)
+    wishing_temp = models.FloatField(default=25.)
+    wishing_hum = models.FloatField(default=40.)
 
 
 class Home(models.Model):

@@ -8,6 +8,10 @@ import paho.mqtt.client as mqtt
 from mqttApp.userSensor import UserSensor
 
 from django.http import JsonResponse
+
+from .models import Information
+import requests
+
 # Create your views here.
 
 
@@ -18,7 +22,10 @@ class InformationDetail(generics.RetrieveUpdateAPIView):
 
 def openRequest(request, pk):
     user = UserSensor()
-    user.run(True)
+    mqttMsg = {
+        "order": True
+    }
+    user.run(mqttMsg)
     msg = {
         "success": True
     }
@@ -26,9 +33,31 @@ def openRequest(request, pk):
 
 
 def closeRequest(request, pk):
-    user = UserSensor()
-    user.run(False)
+    user = UserSensor(topic="sensor/user")
+    mqttMsg = {
+        "order": False
+    }
+    user.run(mqttMsg)
     msg = {
         "success": True
     }
     return JsonResponse(msg)
+
+
+def adjustTempHum(request, pk, wt, wh):
+    if request.method == 'GET':
+        information = Information.objects.get(pk=pk)
+        information.wishing_temp = float(wt)
+        information.wishing_hum = float(wh)
+        information.save()
+        user = UserSensor(topic="sensor/wish")
+        user.run(True)
+        mqttMsg = {
+            "wishTemperature": float(wt),
+            "wishHum": float(wh)
+        }
+        user.run(mqttMsg)
+        msg = {
+            "success": True
+        }
+        return JsonResponse(msg)

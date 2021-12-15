@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 
 load_dotenv(verbose=True)
 
+
 class Client:
     def __init__(self, ip="localhost"):
         self.ip = ip

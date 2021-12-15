@@ -6,6 +6,8 @@ import requests
 
 from sms.lib.auth import *
 from sms.lib.config import *
+import datetime
+
 
 class ServerApplication:
     def __init__(self, ip):
@@ -21,6 +23,7 @@ class ServerApplication:
         self.rain = None
         self.temp_default = 30
         self.hum_default = 50
+        self.time = datetime.datetime.now()
 
     def getClient(self):
         client = mqtt.Client()
@@ -162,14 +165,18 @@ class ServerApplication:
         openMsg = {
             "is_open": res["is_open"]
         }
-
-        
         if res["is_open"] != self.is_open:
-            self.client.publish("control/moter", json.dumps(openMsg))
+            now = datetime.datetime.now()
+            if self.time + datetime.timedelta(minutes=1) < now:
+                self.time = now
+                self.client.publish("control/moter", json.dumps(openMsg))
             
         if res["is_lock"] != self.is_lock:
             if not self.is_open:
-                self.client.publish("control/lock", json.dumps(lockMsg))
+                now = datetime.datetime.now()
+                if self.time + datetime.timedelta(minutes=1) < now:
+                    self.time = now
+                    self.client.publish("control/lock", json.dumps(lockMsg))
      
         self.is_open = res["is_open"]
         self.is_lock = res["is_lock"]

@@ -44,8 +44,10 @@ class Window:
         print("[control/moter] sub : move")
         state = json.loads(msg.payload)["is_open"]
         if state == True:  # open
+            print("fuck")
             self.open()
         else:  # close
+            print("fuck")
             self.close()
 
     def open(self):

@@ -149,6 +149,8 @@ class ServerApplication:
         openMsg = {
             "is_open": res["is_open"]
         }
+        print(res)
+        print(self.win_state, self.lock_state)
         if res["is_open"] != self.win_state:
             print("msg = ", openMsg)
             self.client.publish("control/moter", json.dumps(openMsg))

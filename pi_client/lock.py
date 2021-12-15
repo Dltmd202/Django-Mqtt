@@ -43,9 +43,11 @@ class Lock:
         state = json.loads(msg.payload)
         print(state)
         if state:  # lock
+            print("lock")
             self.servo_pwm.ChangeDutyCycle(6.5)
             time.sleep(0.5)
         else:  # unlock
+            print("unlock")
             self.servo_pwm.ChangeDutyCycle(2)
             time.sleep(0.5)
 

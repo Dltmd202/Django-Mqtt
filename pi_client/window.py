@@ -41,8 +41,10 @@ class Window:
     def control_window(self, msg):
         state = json.loads(msg.payload)
         if state:  # open
+            print("open")
             self.open()
         else:  # close
+            print("close")
             self.close()
     
     def open(self):

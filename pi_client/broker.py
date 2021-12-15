@@ -21,8 +21,6 @@ class ServerApplication:
         self.rain = None
         self.temp_default = 30
         self.hum_default = 50
-        self.win_state = False
-        self.lock_state = False
 
     def getClient(self):
         client = mqtt.Client()
@@ -150,21 +148,21 @@ class ServerApplication:
             "is_open": res["is_open"]
         }
         print("defstate : ", res)
-        print("curstate : ", self.win_state, self.lock_state)
+        print("curstate : ", self.is_open, self.is_lock)
         
-        if res["is_open"] != self.win_state:
+        if res["is_open"] != self.is_open:
             print("msg = ", openMsg)
             self.client.publish("control/moter", json.dumps(openMsg))
             
-        if res["is_lock"] != self.lock_state:
-            if self.win_state:
+        if res["is_lock"] != self.is_lock:
+            if self.is_open:
                 print("wait closing")
-            if not self.win_state:
+            if not self.is_open:
                 print("msg = ", lockMsg)
                 self.client.publish("control/lock", json.dumps(lockMsg))
      
-        self.win_state = res["is_open"]
-        self.lock_state = res["is_lock"]
+        self.is_open = res["is_open"]
+        self.is_lock = res["is_lock"]
         # if res["is_open"] == True:
         #     print("msg = ", lockMsg, openMsg)
         #     self.client.publish("control/lock", json.dumps(lockMsg))
@@ -193,7 +191,7 @@ class ServerApplication:
             "is_person": self.is_person if self.is_person else False,
             "is_rain": self.rain if self.rain else False,
             "is_open": self.is_open if self.is_open else False,
-            "is_lock": self.is_lock if self.is_lock else False
+            "is_lock": self.is_lock if self.is_lock else False,
         }
         return json.dumps(data)
 

@@ -32,7 +32,7 @@ class Distance:
 
     def init_gpio(self):  # gpio핀 초기 설정
         gpio.setmode(gpio.BCM)
-        gpio.cleanup()
+        gpio.setwarnings(False)
         gpio.setup(self.trig_pin, gpio.OUT)  # 초음파센서 trig핀 설정
         gpio.setup(self.echo_pin, gpio.IN)  # 초음파센서 echo핀 설정
 

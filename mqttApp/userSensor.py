@@ -18,7 +18,7 @@ class UserSensor:
             client = mqtt.Client()
 
             def on_connect(client, userdata, flags, rc):
-                print("Connected Rain Sensor" + str(rc))
+                print("Connected User Sensor" + str(rc))
 
             def on_publish(client, userdata, mid):
                 msg_id = mid

@@ -25,7 +25,7 @@ class Window:
                 client.subscribe("control/moter")  # "control/led" 토픽 구독
 
             def on_message(client, userdata, msg):
-                print(f"{msg.topic} : {msg.payload}")  # 수신받은 토픽과 메시지내용 출력
+                print(f"[{msg.topic}] sub : {msg.payload}")  # 수신받은 토픽과 메시지내용 출력
                 self.control_window(msg)
 
             client.on_connect = on_connect
@@ -43,10 +43,8 @@ class Window:
     def control_window(self, msg):
         state = json.loads(msg.payload)
         if state:  # open
-            print("window open")
             self.open()
         else:  # close
-            print("window close")
             self.close()
 
     def open(self):

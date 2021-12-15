@@ -36,7 +36,6 @@ class ServerApplication:
             client.subscribe("sensor/user")
 
         def on_message(client, userdata, msg):
-            print(f"[{msg.topic}] Get Message: {msg.payload}")
             if msg.topic == 'sensor/distance':
                 self.distanceParser(msg)
             elif msg.topic == 'sensor/temp_hum':
@@ -47,13 +46,13 @@ class ServerApplication:
                 self.rainParser(msg)
             elif msg.topic == 'sensor/user':
                 self.orderParser(msg)
+            print(f"[{msg.topic}] sub : {msg.payload}")
             self.motorControl()
             headers = {
                 "Content-Type": "application/json; charset=utf-8",
                 "Accept": "application/json",
             }
             data = self.get_data()
-            print(f"publising {data}")
             res = requests.put(
                 "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
@@ -155,18 +154,14 @@ class ServerApplication:
         openMsg = {
             "is_open": res["is_open"]
         }
-        print("defstate : ", res)
-        print("curstate : ", self.is_open, self.is_lock)
+
         
         if res["is_open"] != self.is_open:
-            print("msg = ", openMsg)
             self.client.publish("control/moter", json.dumps(openMsg))
             
         if res["is_lock"] != self.is_lock:
             if self.is_open:
-                print("wait closing")
             if not self.is_open:
-                print("msg = ", lockMsg)
                 self.client.publish("control/lock", json.dumps(lockMsg))
      
         self.is_open = res["is_open"]
@@ -185,7 +180,6 @@ class ServerApplication:
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
-            print("Finished!")
             self.client.unsubscribe("sensor/#")
             self.client.unsubscribe("control/#")
             self.client.disconnect()

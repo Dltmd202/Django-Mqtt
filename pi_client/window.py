@@ -50,7 +50,7 @@ class Window:
             self.close()
 
     def open(self):
-        self.servo_pwm.ChangeDutyCycle(8)
+        self.servo_pwm.ChangeDutyCycle(10)
 
     def close(self):
         self.servo_pwm.ChangeDutyCycle(2)

@@ -20,7 +20,7 @@ class ServerApplication:
         self.hum = 0
         self.rain = None
         self.temp_default = 30
-        self.hum_default = 40
+        self.hum_default = 50
         self.win_state = False
         self.lock_state = False
 

@@ -46,14 +46,18 @@ class Window:
             self.close()
     
     def open(self):
-        for i in range(3, 12, 1):
-            self.servo_pwm.ChangeDutyCycle(i)
-            time.sleep(0.3)
+        self.servo_pwm.ChangeDutyCycle(12)
+        time.sleep(1)
+        # for i in range(3, 12, 1):
+        #     self.servo_pwm.ChangeDutyCycle(i)
+        #     time.sleep(0.3)
             
     def close(self):
-        for i in range(12, 1, -1):
-            self.servo_pwm.ChangeDutyCycle(i)
-            time.sleep(0.3)
+        self.servo_pwm.ChangeDutyCycle(2)
+        time.sleep(1)
+        # for i in range(12, 1, -1):
+        #     self.servo_pwm.ChangeDutyCycle(i)
+        #     time.sleep(0.3)
 
     def run(self):
         self.client.connect(self.ip)

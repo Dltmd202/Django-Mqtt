@@ -10,7 +10,7 @@ class Lock:
     def __init__(self, ip="localhost"):
         self._client = None
         self.ip = ip
-        self.mpin = 12  # servo 모터 핀번호
+        self.mpin = 18  # servo 모터 핀번호
         self.servo_pwm = None
 
     @property

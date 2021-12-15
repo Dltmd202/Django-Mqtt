@@ -4,8 +4,8 @@ import os
 import paho.mqtt.client as mqtt
 import requests
 
-from sms.lib.auth import *
-from sms.lib.config import *
+from pi_client.sms.lib.auth import *
+from pi_client.sms.lib.config import *
 
 class ServerApplication:
     def __init__(self, ip):

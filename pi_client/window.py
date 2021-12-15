@@ -61,7 +61,7 @@ class Window:
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
-            print("Finished!")
+            print("Finished window!")
             self.client.unsubscribe("control/moter")
             self.client.disconnect()
             gpio.cleanup()

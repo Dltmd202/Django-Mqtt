@@ -65,7 +65,7 @@ class Distance:
                 print(f"publishing : {msg}")  # 송신한 메시지 출력
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("Finished!")
+            print("Finished distance!")
             self.client.loop_stop()
             self.client.disconnect()
             gpio.cleanup()

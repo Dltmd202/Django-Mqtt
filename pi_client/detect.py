@@ -47,7 +47,7 @@ class PIR:
                 print(f"publishing : {msg}")
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("Finished")
+            print("Finished detected")
             self.client.loop_stop()
             self.client.disconnect()
             gpio.cleanup()

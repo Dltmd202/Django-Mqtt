@@ -60,7 +60,7 @@ class Temp_Hum:
                 print(f"publishing: {msg}")
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("Finished!")
+            print("Finished temp, hum!")
             self.client.loop_stop()
             self.client.disconnect()
             gpio.cleanup()

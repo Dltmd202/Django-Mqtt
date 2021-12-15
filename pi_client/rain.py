@@ -53,7 +53,7 @@ class Rain:
                 print(f"publishing : {msg}")
                 time.sleep(1)
         except KeyboardInterrupt:
-            print("Finished")
+            print("Finished rain")
             self.client.loop_stop()
             self.client.disconnect()
             self.spi.close()

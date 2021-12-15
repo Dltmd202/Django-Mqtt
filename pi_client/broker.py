@@ -157,7 +157,7 @@ class ServerApplication:
             if self.win_state:
                 print("wait closing")
             if not self.win_state:
-                print("msg = ", lockMsgMsg)
+                print("msg = ", lockMsg)
                 self.client.publish("control/lock", json.dumps(lockMsg))
             
         self.win_state = res["is_open"]

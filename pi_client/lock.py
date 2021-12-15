@@ -55,7 +55,7 @@ class Lock:
         try:
             self.client.loop_forever()
         except KeyboardInterrupt:
-            print("Finished!")
+            print("Finished lock!")
             self.client.unsubscribe("control/lock")
             self.client.disconnect()
             gpio.cleanup()

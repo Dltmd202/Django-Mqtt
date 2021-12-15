@@ -160,7 +160,6 @@ class ServerApplication:
             self.client.publish("control/moter", json.dumps(openMsg))
             
         if res["is_lock"] != self.is_lock:
-            if self.is_open:
             if not self.is_open:
                 self.client.publish("control/lock", json.dumps(lockMsg))
      

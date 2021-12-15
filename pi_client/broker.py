@@ -61,7 +61,6 @@ class ServerApplication:
             res = requests.get(
                 "http://172.20.10.7:8000/window/inf/1/?format=json"
             )
-            print(res.status_code)
             delay(5)
 
         client.on_connect = on_connect

@@ -109,12 +109,12 @@ class ServerApplication:
             "is_open": False,
             "is_lock": False
         }
-        if self.distance > 10:
-            res["is_open"] = False
+        if self.distance > 10 and self.is_open:
+            res["is_open"] = True
             res["is_lock"] = False
             return res
-        if self.distance <= 10:
-            res["is_open"] = True
+        if self.distance <= 10 and not self.is_open:
+            res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.is_person:

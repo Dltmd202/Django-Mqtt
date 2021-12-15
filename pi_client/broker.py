@@ -83,7 +83,10 @@ class ServerApplication:
 
     def rainParser(self, msg):
         rain_msg = json.loads(msg.payload)
-        self.rain = int(rain_msg['rainlevel'])
+        if int(rain_msg['rainlevel']) > 5:
+            self.rain = True
+        else:
+            self.rain = False
     
     def orderParser(self, msg):
         order_msg = json.loads(msg.payload)

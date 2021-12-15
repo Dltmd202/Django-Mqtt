@@ -111,16 +111,22 @@ class ServerApplication:
         }
         if self.distance > 10 and not self.is_open:
             self.is_open = True
+            return 
         if self.distance <= 10 and self.is_open:
             self.is_open = False
+            return
         if self.is_person:
             res["is_open"] = False
             res["is_lock"] = True
             #self.sendSms()
             return res
         if self.open_order:
+            res["is_open"] = True
+            res["is_lock"] = False
+            return res
+        if not self.open_order:
             res["is_open"] = False
-            res["is_lock"] = True
+            res["is_lock"] = False
             return res
         if self.rain:
             res["is_open"] = False

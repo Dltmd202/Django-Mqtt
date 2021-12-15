@@ -46,6 +46,16 @@ class Window:
         else:  # close
             self.servo_pwm.ChangeDutyCycle(2)
             time.sleep(0.5)
+    
+    def open(self):
+        for i in range(3, 12, 1):
+            self.servo_pwm.ChangeDutyCycle(i)
+            time.sleep(0.3)
+            
+    def clsoe(self):
+        for i in range(12, 1, -1):
+            self.servo_pwm.ChangeDutyCycle(i)
+            time.sleep(0.3)
 
     def run(self):
         self.client.connect(self.ip)

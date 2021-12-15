@@ -41,7 +41,7 @@ class Window:
         self.servo_pwm.start(0)
 
     def control_window(self, msg):
-        state = json.loads(msg.payload)["is_open"]
+        state = json.loads(msg.payload)
         if state:  # open
             print("window open")
             self.open()

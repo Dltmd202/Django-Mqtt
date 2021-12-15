@@ -7,7 +7,7 @@ import json
 class PIR:
     def __init__(self, ip="localhost"):
         self._client = None
-        self.detected = False  # 외부 사람감지
+        self.detected = False
         self.ip = ip
         self.pir_pin = 17
 

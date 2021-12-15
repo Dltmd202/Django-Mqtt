@@ -17,7 +17,7 @@ class Temp_Hum:
         self.instance = None
 
     @property
-    def client(self):  # 클라이언트 private로 생성
+    def client(self):
         if self._client:
             return self._client
         else:

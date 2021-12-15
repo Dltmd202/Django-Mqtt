@@ -10,7 +10,7 @@ class Lock:
     def __init__(self, ip="localhost"):
         self._client = None
         self.ip = ip
-        self.mpin = 18  # servo 모터 핀번호
+        self.mpin = 18
         self.servo_pwm = None
 
     @property
@@ -22,10 +22,10 @@ class Lock:
 
             def on_connect(client, userdata, flags, rc):
                 print("Connected Lock_Control " + str(rc))
-                client.subscribe("control/lock")  # "control/led" 토픽 구독
+                client.subscribe("control/lock")
 
             def on_message(client, userdata, msg):
-                print(f"[{msg.topic}] sub : {msg.payload}")  # 수신받은 토픽과 메시지내용 출력
+                print(f"[{msg.topic}] sub : {msg.payload}")
                 self.control_window(msg)
 
             client.on_connect = on_connect
@@ -33,7 +33,7 @@ class Lock:
             self._client = client
             return client
 
-    def init_pin(self):  # gpio핀 세팅
+    def init_pin(self):
         gpio.setmode(gpio.BCM)
         gpio.setup(self.mpin, gpio.OUT)
         self.servo_pwm = gpio.PWM(self.mpin, 50)

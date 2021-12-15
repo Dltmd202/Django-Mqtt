@@ -58,7 +58,7 @@ class Temp_Hum:
                 }
                 self.client.publish("sensor/temp_hum", json.dumps(msg))
                 print(f"publishing: {msg}")
-                time.sleep(10)
+                time.sleep(5)
         except KeyboardInterrupt:
             print("Finished temp, hum!")
             self.client.loop_stop()

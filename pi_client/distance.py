@@ -63,7 +63,7 @@ class Distance:
                 }
                 self.client.publish("sensor/distance", json.dumps(msg))  # json형식으로 송신
                 print(f"publishing : {msg}")  # 송신한 메시지 출력
-                time.sleep(10)
+                time.sleep(5)
         except KeyboardInterrupt:
             print("Finished distance!")
             self.client.loop_stop()

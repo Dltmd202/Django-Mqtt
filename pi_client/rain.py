@@ -46,7 +46,6 @@ class Rain:
         try:
             while True:
                 self.rainlevel = self.readChannel(self.channel)
-                print("Reading = %d" % self.rainlevel)
                 msg = {
                     "rainlevel": self.rainlevel
                 }

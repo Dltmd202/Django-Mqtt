@@ -147,7 +147,7 @@ class ServerApplication:
         openMsg = {
             "is_open": res["is_open"]
         }
-        if res["is_open"] != self.win_state:
+        '''if res["is_open"] != self.win_state:
             print("msg = ", openMsg)
             self.client.publish("control/moter", json.dumps(openMsg))
             
@@ -159,15 +159,15 @@ class ServerApplication:
                 self.client.publish("control/lock", json.dumps(lockMsg))
             
         self.win_state = res["is_open"]
-        self.lock_state = res["is_lock"]
-        '''if res["is_open"] == True:
+        self.lock_state = res["is_lock"]'''
+        if res["is_open"] == True:
             print("msg = ", lockMsg, openMsg)
             self.client.publish("control/lock", json.dumps(lockMsg))
             self.client.publish("control/moter", json.dumps(openMsg))
         else:
             print("msg = ", lockMsg, openMsg)
             self.client.publish("control/moter", json.dumps(openMsg))
-            self.client.publish("control/lock", json.dumps(lockMsg))'''
+            self.client.publish("control/lock", json.dumps(lockMsg))
 
     def run(self):
         self.client.connect(self.ip)

@@ -166,20 +166,22 @@ class ServerApplication:
             "is_open": res["is_open"]
         }
         if res["is_open"] != self.is_open:
-            now = datetime.datetime.now()
-            if self.time + datetime.timedelta(minutes=1) < now:
-                self.time = now
-                self.client.publish("control/moter", json.dumps(openMsg))
+            # now = datetime.datetime.now()
+            # if self.time + datetime.timedelta(minutes=1) < now:
+            #     self.time = now
+            self.client.publish("control/moter", json.dumps(openMsg))
+            self.is_open = res["is_open"]
+            self.is_lock = res["is_lock"]
             
         if res["is_lock"] != self.is_lock:
             if not self.is_open:
-                now = datetime.datetime.now()
-                if self.time + datetime.timedelta(minutes=1) < now:
-                    self.time = now
-                    self.client.publish("control/lock", json.dumps(lockMsg))
-     
-        self.is_open = res["is_open"]
-        self.is_lock = res["is_lock"]
+                # now = datetime.datetime.now()
+                # if self.time + datetime.timedelta(minutes=1) < now:
+                #     self.time = now
+                self.client.publish("control/lock", json.dumps(lockMsg))
+                self.is_open = res["is_open"]
+                self.is_lock = res["is_lock"]
+
         # if res["is_open"] == True:
         #     print("msg = ", lockMsg, openMsg)
         #     self.client.publish("control/lock", json.dumps(lockMsg))

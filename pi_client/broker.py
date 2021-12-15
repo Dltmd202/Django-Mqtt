@@ -61,7 +61,7 @@ class ServerApplication:
             res = requests.get(
                 "http://172.20.10.7:8000/window/inf/1/?format=json"
             )
-            delay(5)
+            time.sleep(3)
 
         client.on_connect = on_connect
         client.on_message = on_message

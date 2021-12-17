@@ -84,8 +84,8 @@ class ServerApplication:
         self.is_person = detct_msg['detected']
 
     def rainParser(self, msg):
-        rain_msg = json.loads(msg.payload)
-        self.rain = rain_msg['rainlevel']
+        # rain_msg = json.loads(msg.payload)
+        self.rain = int(msg.payload)
     
     def orderParser(self, msg):
         order_msg = json.loads(msg.payload)

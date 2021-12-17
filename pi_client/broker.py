@@ -80,8 +80,9 @@ class ServerApplication:
         self.hum = float(temp_msg['humidity'])
 
     def detectParser(self, msg):
-        temp_msg = json.loads(msg.payload)
-        self.is_person = temp_msg['detected']
+        detct_msg = json.loads(msg.payload)
+        print(detct_msg)
+        self.is_person = detct_msg['detected']
 
     def rainParser(self, msg):
         rain_msg = json.loads(msg.payload)

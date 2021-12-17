@@ -48,7 +48,7 @@ class Rain:
                 self.rainlevel = self.readChannel(self.channel)
                 msg = json.dumps({
                     "msg": "success",
-                    "rainlevel": str(self.rainlevel),
+                    "rainlevel": True if self.rainlevel else False,
                     "status": 1
                 })
                 print(f"[sensor/rain] publish : {msg}")

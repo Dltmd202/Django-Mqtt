@@ -46,13 +46,13 @@ class Rain:
         try:
             while True:
                 self.rainlevel = self.readChannel(self.channel)
-                msg = {
+                msg = json.dumps({
                     "msg": "success",
                     "rainlevel": str(self.rainlevel),
                     "status": 1
-                }
+                })
                 print(f"[sensor/rain] publish : {msg}")
-                self.client.publish("sensor/rain", json.dumps(msg))
+                self.client.publish("sensor/rain", msg)
         except KeyboardInterrupt:
             print("Finished rain")
             self.client.loop_stop()

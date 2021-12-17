@@ -36,6 +36,7 @@ class ServerApplication:
             client.subscribe("sensor/detect")
             client.subscribe("sensor/rain")
             client.subscribe("sensor/user")
+            client.subscribe("sensor/wish")
 
         def on_message(client, userdata, msg):
             # if msg.topic == 'sensor/distance':

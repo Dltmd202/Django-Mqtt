@@ -150,12 +150,12 @@ class ServerApplication:
             res["is_open"] = False
             res["is_lock"] = False
             return res
-        if self.temp_default + 5 < self.temp or self.hum_default + 5 < self.hum:
+        if self.temp_default + 5 < self.temp or self.hum_default - 5 > self.hum:
             print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
-        elif self.temp_default - 5 > self.temp or self.hum_default - 5 > self.hum:
+        elif self.temp_default - 5 > self.temp or self.hum_default + 5 < self.hum:
             print("사용자 설정 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False

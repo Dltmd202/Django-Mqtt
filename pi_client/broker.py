@@ -105,8 +105,8 @@ class ServerApplication:
    
     def defOpenNLock(self):
         res = {
-            "is_open": False,
-            "is_lock": False
+            "is_open": self.is_open,
+            "is_lock": self.is_lock
         }
         # if self.distance > 10 and not self.is_open:
         #     print("문이 정보와 달라 여는 중!!!!!!!!!!!!!!!")

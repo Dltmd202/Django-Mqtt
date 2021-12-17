@@ -85,7 +85,6 @@ class ServerApplication:
 
     def rainParser(self, msg):
         rain_msg = json.loads(msg.payload)
-        print("rain_msg : ", int(rain_msg['rainlevel']))
         self.rain = True if rain_msg['rainlevel'] > 0 else False
     
     def orderParser(self, msg):
@@ -119,12 +118,12 @@ class ServerApplication:
         #     res["is_open"] = False
         #     res["is_lock"] = False
         #     return res
-        # if self.is_person:
-        #     print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
-        #     res["is_open"] = False
-        #     res["is_lock"] = True
-        #     #self.sendSms()
-        #     return res
+        if self.is_person:
+            print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
+            res["is_open"] = False
+            res["is_lock"] = True
+            #self.sendSms()
+            return res
         # if self.open_order is not None:
         #     print(self.open_order)
         #     if self.open_order:
@@ -137,22 +136,21 @@ class ServerApplication:
         #         res["is_lock"] = False
         #     self.open_order = None
         #     return res
-        print(self.rain)
-        if self.rain:
-            print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
-            res["is_open"] = False
-            res["is_lock"] = False
-            return res
-        if self.temp_default + 10 < self.temp or self.hum_default + 10 < self.hum:
-            print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
-            res["is_open"] = True
-            res["is_lock"] = False
-            return res
-        elif self.temp_default - 10 > self.temp or self.hum_default - 10 > self.hum:
-            print("사용자 설정 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
-            res["is_open"] = False
-            res["is_lock"] = False
-            return res
+        # if self.rain:
+        #     print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
+        #     res["is_open"] = False
+        #     res["is_lock"] = False
+        #     return res
+        # if self.temp_default + 10 < self.temp or self.hum_default + 10 < self.hum:
+        #     print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
+        #     res["is_open"] = True
+        #     res["is_lock"] = False
+        #     return res
+        # elif self.temp_default - 10 > self.temp or self.hum_default - 10 > self.hum:
+        #     print("사용자 설정 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
+        #     res["is_open"] = False
+        #     res["is_lock"] = False
+        #     return res
         else:
             self.time = datetime.datetime.now()
             print("환기 중%%%%%%%%%%%%%%%%")

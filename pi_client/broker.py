@@ -21,8 +21,8 @@ class ServerApplication:
         self.temp = 0
         self.hum = 0
         self.rain = None
-        self.temp_default = 30
-        self.hum_default = 50
+        self.temp_default = 30.0
+        self.hum_default = 50.0
         self.sms = False
         self.time = datetime.datetime.now()
 
@@ -35,8 +35,6 @@ class ServerApplication:
             client.subscribe("sensor/temp_hum")
             client.subscribe("sensor/detect")
             client.subscribe("sensor/rain")
-            # client.subscribe("control/motor")
-            # client.subscribe("control/lock")
             client.subscribe("sensor/user")
 
         def on_message(client, userdata, msg):
@@ -95,8 +93,8 @@ class ServerApplication:
         
     def wishParser(self, msg):
         wish = json.loads(msg.payload)
-        self.temp_default = wish["wishTemperature"]
-        self.hum_default = wish['wishHum']
+        self.temp_default = float(wish["wishTemperature"])
+        self.hum_default = float(wish['wishHum'])
 
     def sendSms(self):
         sms = {

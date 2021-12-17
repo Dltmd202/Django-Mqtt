@@ -37,7 +37,7 @@ class ServerApplication:
             client.subscribe("sensor/rain")
             # client.subscribe("control/motor")
             # client.subscribe("control/lock")
-            # client.subscribe("sensor/user")
+            client.subscribe("sensor/user")
 
         def on_message(client, userdata, msg):
             # if msg.topic == 'sensor/distance':
@@ -48,8 +48,8 @@ class ServerApplication:
                 self.detectParser(msg)
             elif msg.topic == 'sensor/rain':
                 self.rainParser(msg)
-            # elif msg.topic == 'sensor/user':
-            #     self.orderParser(msg)
+            elif msg.topic == 'sensor/user':
+                self.orderParser(msg)
             print(f"[{msg.topic}] sub : {msg.payload}")
             self.motorControl()
             headers = {
@@ -126,18 +126,18 @@ class ServerApplication:
                 self.sendSms()
                 self.sms = True
             return res
-        # if self.open_order is not None:
-        #     print(self.open_order)
-        #     if self.open_order:
-        #         print("명령으로 인해 여는 중###########")
-        #         res["is_open"] = True
-        #         res["is_lock"] = False
-        #     if not self.open_order:
-        #         print("명령으로 인해 닫는 중###########")
-        #         res["is_open"] = False
-        #         res["is_lock"] = False
-        #     self.open_order = None
-        #     return res
+        if self.open_order is not None:
+            print(self.open_order)
+            if self.open_order:
+                print("명령으로 인해 여는 중###########")
+                res["is_open"] = True
+                res["is_lock"] = False
+            if not self.open_order:
+                print("명령으로 인해 닫는 중###########")
+                res["is_open"] = False
+                res["is_lock"] = False
+            self.open_order = None
+            return res
         if self.rain and self.rain > 5:
             print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False

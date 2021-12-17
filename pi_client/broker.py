@@ -93,6 +93,7 @@ class ServerApplication:
         
     def wishParser(self, msg):
         wish = json.loads(msg.payload)
+        print("!!!!!!!!!!!!!!!!!!!!!!!!" + wish)
         self.temp_default = float(wish["wishTemperature"])
         self.hum_default = float(wish['wishHum'])
 

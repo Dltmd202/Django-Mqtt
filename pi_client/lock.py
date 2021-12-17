@@ -40,7 +40,7 @@ class Lock:
         self.servo_pwm.start(0)
 
     def control_window(self, msg):
-        state = json.loads(msg.payload)
+        state = json.loads(msg.payload)["is_lock"]
         print(type(state))
         if state == True:
             self.servo_pwm.ChangeDutyCycle(6.5)

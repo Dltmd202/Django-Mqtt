@@ -29,6 +29,9 @@ def openRequest(request, pk):
     msg = {
         "success": True
     }
+    info = Information.objects.get(pk=pk)
+    info.is_open = True
+    info.save()
     return JsonResponse(msg)
 
 
@@ -41,6 +44,9 @@ def closeRequest(request, pk):
     msg = {
         "success": True
     }
+    info = Information.objects.get(pk=pk)
+    info.is_open = False
+    info.save()
     return JsonResponse(msg)
 
 

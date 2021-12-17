@@ -49,7 +49,7 @@ class Rain:
                 msg = {
                     "rainlevel": self.rainlevel
                 }
-                print(f"[sensor/rain] publish : {msg}")
+                #print(f"[sensor/rain] publish : {msg}")
                 self.client.publish("sensor/rain", json.dumps(msg))
                 time.sleep(3)
         except KeyboardInterrupt:

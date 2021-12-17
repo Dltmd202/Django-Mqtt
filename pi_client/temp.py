@@ -54,7 +54,8 @@ class Temp_Hum:
                 self.get_TH()
                 msg = {
                     "temperature": self.temperature,
-                    "humidity": self.humidity
+                    "humidity": self.humidity,
+                    "msg": "success"
                 }
                 self.client.publish("sensor/temp_hum", json.dumps(msg))
                 #print(f"[sensor/temp_hum] publish : {msg}")

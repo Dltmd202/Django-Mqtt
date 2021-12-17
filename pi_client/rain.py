@@ -47,7 +47,8 @@ class Rain:
             while True:
                 self.rainlevel = self.readChannel(self.channel)
                 msg = {
-                    "rainlevel": self.rainlevel
+                    "rainlevel": self.rainlevel,
+                    "msg": "success"
                 }
                 #print(f"[sensor/rain] publish : {msg}")
                 self.client.publish("sensor/rain", json.dumps(msg))

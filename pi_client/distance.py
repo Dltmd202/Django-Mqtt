@@ -59,7 +59,8 @@ class Distance:
             while True:
                 self.distance = self.get_distance()
                 msg = {
-                    "distance": self.distance
+                    "distance": self.distance,
+                    "msg": "success"
                 }
                 self.client.publish("sensor/distance", json.dumps(msg)) 
                 #print(f"[sensor/distance] publish : {msg}") 

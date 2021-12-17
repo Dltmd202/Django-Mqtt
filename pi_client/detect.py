@@ -42,7 +42,7 @@ class PIR:
                 self.detected = True if gpio.input(self.pir_pin) else False 
                 msg = json.dumps({
                     "detected": self.detected,
-                    "msg": "fuck you"
+                    "msg": "success"
                 })
                 self.client.publish("sensor/detect", msg)
                 print(f"[sensor/detect] publish: {msg}")

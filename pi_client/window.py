@@ -71,4 +71,3 @@ class Window:
 if __name__ == "__main__":
     Moter_Control = Window()
     Moter_Control.run()
-    

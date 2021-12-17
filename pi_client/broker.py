@@ -179,6 +179,7 @@ class ServerApplication:
                 # now = datetime.datetime.now()
                 # if self.time + datetime.timedelta(minutes=1) < now:
                 #     self.time = now
+        time.sleep(2)
         self.client.publish("control/lock", json.dumps(lockMsg))
             # self.is_open = res["is_open"]
             # self.is_lock = res["is_lock"]

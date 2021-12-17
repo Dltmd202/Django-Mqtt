@@ -11,7 +11,6 @@ class Window:
         self.ip = ip
         self.mpin = 12
         self.servo_pwm = None
-        self.pduty = 2
 
     @property
     def client(self):
@@ -44,10 +43,10 @@ class Window:
         print("[control/moter] sub : move")
         state = json.loads(msg.payload)["is_open"]
         if state == True:
-            print("fuck")
+            print("open")
             self.open()
         else:
-            print("fuck")
+            print("close")
             self.close()
 
     def open(self):

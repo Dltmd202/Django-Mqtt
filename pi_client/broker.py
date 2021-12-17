@@ -50,6 +50,8 @@ class ServerApplication:
                 self.rainParser(msg)
             elif msg.topic == 'sensor/user':
                 self.orderParser(msg)
+            elif msg.topic == 'sensor/wish':
+                self.wishParser(msg)
             print(f"[{msg.topic}] sub : {msg.payload}")
             self.motorControl()
             headers = {
@@ -89,7 +91,12 @@ class ServerApplication:
     
     def orderParser(self, msg):
         order_msg = json.loads(msg.payload)
-        self.open_order = order_msg["order"]
+        self.open_order = order_msg["order"]    
+        
+    def wishParser(self, msg):
+        wish = json.loads(msg.payload)
+        self.temp_default = wish["wishTemperature"]
+        self.hum_default = wish['wishHum']
 
     def sendSms(self):
         sms = {

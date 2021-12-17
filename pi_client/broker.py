@@ -39,16 +39,16 @@ class ServerApplication:
             client.subscribe("sensor/user")
 
         def on_message(client, userdata, msg):
-            if msg.topic == 'sensor/distance':
-                self.distanceParser(msg)
-            elif msg.topic == 'sensor/temp_hum':
-                self.tempParser(msg)
-            elif msg.topic == 'sensor/detect':
+            # if msg.topic == 'sensor/distance':
+            #     self.distanceParser(msg)
+            # elif msg.topic == 'sensor/temp_hum':
+            #     self.tempParser(msg)
+            if msg.topic == 'sensor/detect':
                 self.detectParser(msg)
-            elif msg.topic == 'sensor/rain':
-                self.rainParser(msg)
-            elif msg.topic == 'sensor/user':
-                self.orderParser(msg)
+            # elif msg.topic == 'sensor/rain':
+            #     self.rainParser(msg)
+            # elif msg.topic == 'sensor/user':
+            #     self.orderParser(msg)
             print(f"[{msg.topic}] sub : {msg.payload}")
             self.motorControl()
             headers = {

@@ -49,7 +49,7 @@ class ServerApplication:
             #     self.rainParser(msg)
             # elif msg.topic == 'sensor/user':
             #     self.orderParser(msg)
-            print(f"[{msg.topic}] sub : {type(msg.payload)}")
+            print(f"[{msg.topic}] sub : {msg.payload}")
             self.motorControl()
             headers = {
                 "Content-Type": "application/json; charset=utf-8",
@@ -81,6 +81,7 @@ class ServerApplication:
 
     def detectParser(self, msg):
         detct_msg = json.loads(msg.payload)
+        print((typedetct_msg['detected']))
         self.is_person = detct_msg['detected']
 
     def rainParser(self, msg):

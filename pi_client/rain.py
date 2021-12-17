@@ -37,7 +37,7 @@ class Rain:
     def readChannel(self, channel):
         adc = self.spi.xfer2([1, (8 + channel) << 4, 0])
         adc_out = ((adc[1] & 3) << 8) + adc[2]
-        return adc_out
+        return int(adc_out)
 
     def run(self):
         self.init_pin()

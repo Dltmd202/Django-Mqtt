@@ -64,7 +64,6 @@ class ServerApplication:
             res = requests.get(
                 "http://172.20.10.7:8000/window/inf/1/?format=json"
             )
-            time.sleep(3)
 
         client.on_connect = on_connect
         client.on_message = on_message
@@ -180,7 +179,6 @@ class ServerApplication:
                 # now = datetime.datetime.now()
                 # if self.time + datetime.timedelta(minutes=1) < now:
                 #     self.time = now
-        time.sleep(2)
         self.client.publish("control/lock", json.dumps(lockMsg))
             # self.is_open = res["is_open"]
             # self.is_lock = res["is_lock"]

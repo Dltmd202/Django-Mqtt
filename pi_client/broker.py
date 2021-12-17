@@ -204,7 +204,7 @@ class ServerApplication:
             "temperature": self.temp if self.temp else 0.,
             "humidity": self.hum if self.hum else 0.,
             "is_person": self.is_person if self.is_person else False,
-            "is_rain": self.rain if self.rain else False,
+            "is_rain": True if self.rain else False,
             "is_open": self.is_open if self.is_open else False,
             "is_lock": self.is_lock if self.is_lock else False,
         }

@@ -42,8 +42,8 @@ class ServerApplication:
         def on_message(client, userdata, msg):
             # if msg.topic == 'sensor/distance':
             #     self.distanceParser(msg)
-            # elif msg.topic == 'sensor/temp_hum':
-            #     self.tempParser(msg)
+            if msg.topic == 'sensor/temp_hum':
+                self.tempParser(msg)
             if msg.topic == 'sensor/detect':
                 self.detectParser(msg)
             elif msg.topic == 'sensor/rain':

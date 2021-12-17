@@ -81,7 +81,7 @@ class ServerApplication:
 
     def detectParser(self, msg):
         detct_msg = json.loads(msg.payload)
-        print((typedetct_msg['detected']))
+        print(type(detct_msg['detected']))
         self.is_person = detct_msg['detected']
 
     def rainParser(self, msg):

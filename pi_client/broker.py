@@ -105,7 +105,7 @@ class ServerApplication:
    
     def defOpenNLock(self):
         res = {
-            "is_open": True,
+            "is_open": False,
             "is_lock": False
         }
         # if self.distance > 10 and not self.is_open:

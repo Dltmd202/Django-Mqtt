@@ -95,7 +95,7 @@ class ServerApplication:
         sms = {
             'message': {
                 'to': '01037065337',
-                'from': '01034657095',
+                'from': '01077530901',
                 'text': f'현재 스마트 창문이 침입자를 감지하여 창문을 닫았습니다.'
             }
         }

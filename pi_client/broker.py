@@ -138,11 +138,11 @@ class ServerApplication:
         #         res["is_lock"] = False
         #     self.open_order = None
         #     return res
-        # if self.rain:
-        #     print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
-        #     res["is_open"] = False
-        #     res["is_lock"] = False
-        #     return res
+        if self.rain:
+            print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
+            res["is_open"] = False
+            res["is_lock"] = False
+            return res
         # if self.temp_default + 10 < self.temp or self.hum_default + 10 < self.hum:
         #     print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
         #     res["is_open"] = True
@@ -169,6 +169,7 @@ class ServerApplication:
             "is_open": res["is_open"]
         }
         
+        # detect!!!!!!!!!!!!!!!!!!
         # if res["is_open"] != self.is_open:
         self.client.publish("control/moter", json.dumps(openMsg))
         self.is_open = res["is_open"]
@@ -176,6 +177,7 @@ class ServerApplication:
         #     if not self.is_open:
         self.client.publish("control/lock", json.dumps(lockMsg))
         self.is_lock = res["is_lock"]
+        # detect!!!!!!!!!!!!!!!!!!
 
         # if res["is_open"] == True:
         #     print("msg = ", lockMsg, openMsg)

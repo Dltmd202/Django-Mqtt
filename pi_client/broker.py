@@ -34,7 +34,7 @@ class ServerApplication:
             # client.subscribe("sensor/distance")
             # client.subscribe("sensor/temp_hum")
             client.subscribe("sensor/detect")
-            # client.subscribe("sensor/rain")
+            client.subscribe("sensor/rain")
             # client.subscribe("control/motor")
             # client.subscribe("control/lock")
             # client.subscribe("sensor/user")
@@ -46,8 +46,8 @@ class ServerApplication:
             #     self.tempParser(msg)
             if msg.topic == 'sensor/detect':
                 self.detectParser(msg)
-            # elif msg.topic == 'sensor/rain':
-            #     self.rainParser(msg)
+            elif msg.topic == 'sensor/rain':
+                self.rainParser(msg)
             # elif msg.topic == 'sensor/user':
             #     self.orderParser(msg)
             print(f"[{msg.topic}] sub : {msg.payload}")

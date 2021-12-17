@@ -81,7 +81,6 @@ class ServerApplication:
 
     def detectParser(self, msg):
         detct_msg = json.loads(msg.payload)
-        print(detct_msg)
         self.is_person = detct_msg['detected']
 
     def rainParser(self, msg):
@@ -119,6 +118,7 @@ class ServerApplication:
         #     res["is_open"] = False
         #     res["is_lock"] = False
         #     return res
+        print("is_person", self.is_person)
         if self.is_person:
             print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False

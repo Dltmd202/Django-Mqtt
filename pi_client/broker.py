@@ -93,8 +93,8 @@ class ServerApplication:
         self.open_order = order_msg["order"]    
         
     def wishParser(self, msg):
+        print(msg.payload)
         wish = json.loads(msg.payload)
-        print("!!!!!!!!!!!!!!!!!!!!!!!!" + wish)
         self.temp_default = float(wish["wishTemperature"])
         self.hum_default = float(wish['wishHum'])
 

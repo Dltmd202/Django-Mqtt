@@ -57,7 +57,6 @@ def adjustTempHum(request, pk, wt, wh):
         information.wishing_hum = float(wh)
         information.save()
         user = UserSensor(topic="sensor/wish")
-        user.run(True)
         mqttMsg = {
             "wishTemperature": float(wt),
             "wishHum": float(wh)

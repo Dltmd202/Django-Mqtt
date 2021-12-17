@@ -84,9 +84,8 @@ class ServerApplication:
         self.is_person = int(temp_msg['detected'])
 
     def rainParser(self, msg):
-        print("rain!@#!@#!#@!#!@#", msg.payload)
         rain_msg = json.loads(msg.payload)
-        print("rain_msg : ", rain_msg)
+        print("rain_msg : ", int(rain_msg['rainlevel']))
         self.rain = True if rain_msg['rainlevel'] > 0 else False
     
     def orderParser(self, msg):

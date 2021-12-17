@@ -43,7 +43,6 @@ class ServerApplication:
             #     self.distanceParser(msg)
             # elif msg.topic == 'sensor/temp_hum':
             #     self.tempParser(msg)
-            print(msg.payload)
             if msg.topic == 'sensor/detect':
                 self.detectParser(msg)
             # elif msg.topic == 'sensor/rain':

@@ -81,7 +81,7 @@ class ServerApplication:
 
     def detectParser(self, msg):
         temp_msg = json.loads(msg.payload)
-        self.is_person = int(temp_msg['detected'])
+        self.is_person = temp_msg['detected']
 
     def rainParser(self, msg):
         rain_msg = json.loads(msg.payload)

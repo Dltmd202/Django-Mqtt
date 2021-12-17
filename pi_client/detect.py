@@ -45,7 +45,7 @@ class PIR:
                 }
                 self.client.publish("sensor/detect", json.dumps(msg))
                 print(f"[sensor/detect] publish: {msg}")
-                time.sleep(5)
+                time.sleep(1)
         except KeyboardInterrupt:
             print("Finished detected")
             self.client.loop_stop()

@@ -57,7 +57,7 @@ class ServerApplication:
                 "Accept": "application/json",
             }
             data = self.get_data()
-            res = requests.put(
+            res = requests.patch(
                 "http://172.20.10.7:8000/window/inf/1/?format=json",
                 headers=headers,
                 data=str(data)

@@ -52,7 +52,6 @@ class Rain:
                 }
                 #print(f"[sensor/rain] publish : {msg}")
                 self.client.publish("sensor/rain", json.dumps(msg))
-                time.sleep(3)
         except KeyboardInterrupt:
             print("Finished rain")
             self.client.loop_stop()

@@ -105,7 +105,7 @@ class ServerApplication:
    
     def defOpenNLock(self):
         res = {
-            "is_open": False,
+            "is_open": True,
             "is_lock": False
         }
         # if self.distance > 10 and not self.is_open:
@@ -151,12 +151,12 @@ class ServerApplication:
         #     res["is_open"] = False
         #     res["is_lock"] = False
         #     return res
-        else:
-            self.time = datetime.datetime.now()
-            print("환기 중%%%%%%%%%%%%%%%%")
-            res["is_open"] = True
-            res["is_lock"] = False
-            return res
+        # else:
+        #     self.time = datetime.datetime.now()
+        #     print("환기 중%%%%%%%%%%%%%%%%")
+        #     res["is_open"] = True
+        #     res["is_lock"] = False
+        return res
 
     def motorControl(self):
         res = self.defOpenNLock()

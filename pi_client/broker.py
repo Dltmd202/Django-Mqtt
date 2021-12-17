@@ -32,7 +32,7 @@ class ServerApplication:
         def on_connect(client, userdata, flags, rc):
             print("connected with result code " + str(rc))
             # client.subscribe("sensor/distance")
-            # client.subscribe("sensor/temp_hum")
+            client.subscribe("sensor/temp_hum")
             client.subscribe("sensor/detect")
             client.subscribe("sensor/rain")
             # client.subscribe("control/motor")

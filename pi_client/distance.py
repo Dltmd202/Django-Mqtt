@@ -62,8 +62,8 @@ class Distance:
                     "distance": self.distance
                 }
                 self.client.publish("sensor/distance", json.dumps(msg)) 
-                print(f"[sensor/distance] publish : {msg}") 
-                time.sleep(1)
+                #print(f"[sensor/distance] publish : {msg}") 
+                time.sleep(3)
         except KeyboardInterrupt:
             print("Finished distance!")
             self.client.loop_stop()

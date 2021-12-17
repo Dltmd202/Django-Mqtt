@@ -173,7 +173,7 @@ class ServerApplication:
         self.client.publish("control/moter", json.dumps(openMsg))
             # self.is_open = res["is_open"]
             # self.is_lock = res["is_lock"]
-            
+            time.sleep(1)
        # if res["is_lock"] != self.is_lock:
             #if not self.is_open:
                 # now = datetime.datetime.now()

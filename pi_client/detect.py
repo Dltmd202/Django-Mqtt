@@ -40,10 +40,10 @@ class PIR:
         try:
             while True:
                 self.detected = True if gpio.input(self.pir_pin) else False 
-                msg = {
+                msg = json.dumps({
                     "detected": self.detected
-                }
-                self.client.publish("sensor/detect", json.dumps(msg))
+                })
+                self.client.publish("sensor/detect", msg)
                 print(f"[sensor/detect] publish: {msg}")
                 time.sleep(1)
         except KeyboardInterrupt:

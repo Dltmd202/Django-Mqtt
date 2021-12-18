@@ -134,7 +134,7 @@ class ServerApplication:
                 self.sendSms()
                 self.sms = True
             return res
-        if self.open_order is not None:
+        elif self.open_order is not None:
             self.time = None
             print(self.open_order)
             if self.open_order:
@@ -147,31 +147,31 @@ class ServerApplication:
                 res["is_lock"] = False
             self.open_order = None
             return res
-        if self.rain and self.rain > 40:
+        elif self.rain and self.rain > 40:
             self.time = None
             print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False
             res["is_lock"] = False
             return res
-        if self.temp_default + 5 < self.temp:
+        elif self.temp_default + 5 < self.temp:
             self.time = None
             print("사용자 온도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
-        if self.hum_default + 5 < self.hum:
+        elif self.hum_default + 5 < self.hum:
             self.time = None
             print("사용자 습도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
-        if self.temp_default - 5 > self.temp:
+        elif self.temp_default - 5 > self.temp:
             self.time = None
             print("사용자 온도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
-        if self.hum_default - 5 > self.hum:
+        elif self.hum_default - 5 > self.hum:
             self.time = None
             print("사용자 습도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
@@ -191,8 +191,7 @@ class ServerApplication:
                     res["is_open"] = False
                     res["is_lock"] = False
                     self.time = None
-
-        return res
+            return res
 
     def motorControl(self):
         res = self.defOpenNLock()

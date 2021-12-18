@@ -134,7 +134,7 @@ class ServerApplication:
                 self.sendSms()
                 self.sms = True
             return res
-        elif self.open_order is not None:
+        if self.open_order is not None:
             self.time = None
             print(self.open_order)
             if self.open_order:
@@ -147,51 +147,51 @@ class ServerApplication:
                 res["is_lock"] = False
             self.open_order = None
             return res
-        elif self.rain and self.rain > 40:
+        if self.rain and self.rain > 40:
             self.time = None
             print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False
             res["is_lock"] = False
             return res
-        elif self.temp_default + 5 < self.temp:
+        if self.temp_default + 5 < self.temp:
             self.time = None
             print("사용자 온도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
-        elif self.hum_default + 5 < self.hum:
+        if self.hum_default + 5 < self.hum:
             self.time = None
             print("사용자 습도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
-        elif self.temp_default - 5 > self.temp:
+        if self.temp_default - 5 > self.temp:
             self.time = None
             print("사용자 온도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
-        elif self.hum_default - 5 > self.hum:
+        if self.hum_default - 5 > self.hum:
             self.time = None
             print("사용자 습도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
+
+        now = datetime.datetime.now()
+        if self.time is None:
+            self.time = now
+            print("환기 시작%%%%%%%%%%%%%%%%")
+            res["is_open"] = True
+            res["is_lock"] = False
         else:
-            now = datetime.datetime.now()
-            if self.time is None:
-                self.time = now
-                print("환기 시작%%%%%%%%%%%%%%%%")
-                res["is_open"] = True
+            date_diff = now - self.time
+            if (date_diff.seconds/60) >= 60:
+                print("환기 종료%%%%%%%%%%%%%%%%")
+                res["is_open"] = False
                 res["is_lock"] = False
-            else:
-                date_diff = now - self.time
-                if (date_diff.seconds/60) >= 60:
-                    print("환기 종료%%%%%%%%%%%%%%%%")
-                    res["is_open"] = False
-                    res["is_lock"] = False
-                    self.time = None
-            return res
+                self.time = None
+        return res
 
     def motorControl(self):
         res = self.defOpenNLock()

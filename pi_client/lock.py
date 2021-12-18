@@ -26,7 +26,7 @@ class Lock:
 
             def on_message(client, userdata, msg):
                 print(f"[{msg.topic}] sub : {msg.payload}")
-                self.control_window(msg)
+                self.control_lock(msg)
 
             client.on_connect = on_connect
             client.on_message = on_message
@@ -39,15 +39,23 @@ class Lock:
         self.servo_pwm = gpio.PWM(self.mpin, 50)
         self.servo_pwm.start(0)
 
-    def control_window(self, msg):
+    def lock(self):
+        self.servo_pwm.ChangeDutyCycle(6.5)
+        time.sleep(0.5)
+
+    def unlock(self):
+        self.servo_pwm.ChangeDutyCycle(2)
+        time.sleep(0.5)
+
+    def control_lock(self, msg):
         state = json.loads(msg.payload)["is_lock"]
         if state == True:
             time.sleep(2)
-            self.servo_pwm.ChangeDutyCycle(6.5)
-            time.sleep(0.5)
+            print("Lock!!!!")
+            lock()
         else:
-            self.servo_pwm.ChangeDutyCycle(2)
-            time.sleep(0.5)
+            print("unLock!!!!")
+            unlock()
 
     def run(self):
         self.client.connect(self.ip)

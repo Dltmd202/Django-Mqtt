@@ -129,9 +129,9 @@ class ServerApplication:
             print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False
             res["is_lock"] = True
-            if not self.sms:
-                self.sendSms()
-                self.sms = True
+            # if not self.sms:
+            #     self.sendSms()
+            #     self.sms = True
             return res
         if self.open_order is not None:
             print(self.open_order)
@@ -186,32 +186,23 @@ class ServerApplication:
                 self.time = None
         return res
 
-    def motorControl(self):
-        res = self.defOpenNLock()
-        lockMsg = {
-            "is_lock": res["is_lock"]
-        }
-        openMsg = {
-            "is_open": res["is_open"]
-        }
-
-        if res["is_open"] != self.is_open:
-            self.client.publish("control/moter", json.dumps(openMsg))
-            self.is_open = res["is_open"]
-        if res["is_lock"] != self.is_lock:
-            self.client.publish("control/lock", json.dumps(lockMsg))
-            self.is_lock = res["is_lock"]
-        # detect!!!!!!!!!!!!!!!!!!
-
-        # if res["is_open"] == True:
-        #     print("msg = ", lockMsg, openMsg)
-        #     self.client.publish("control/lock", json.dumps(lockMsg))
-        #     self.client.publish("control/moter", json.dumps(openMsg))
-        # else:
-        #     print("msg = ", lockMsg, openMsg)
-        #     self.client.publish("control/moter", json.dumps(openMsg))
-        #     self.client.publish("control/lock", json.dumps(lockMsg))
-
+def motorControl(self):
+    res = self.defOpenNLock()
+    lockMsg = {
+        "is_lock": res["is_lock"]
+    }
+    openMsg = {
+        "is_open": res["is_open"]
+    }
+    if res["is_open"] != self.is_open:
+        self.client.publish("control/moter", json.dumps(openMsg))
+        self.is_open = res["is_open"]
+        self.is_lock = res["is_lock"]
+    if res["is_lock"] != self.is_lock:
+        self.client.publish("control/lock", json.dumps(lockMsg))
+        self.is_open = res["is_open"]
+        self.is_lock = res["is_lock"]
+        
     def run(self):
         self.client.connect(self.ip)
         try:

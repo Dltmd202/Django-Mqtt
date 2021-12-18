@@ -86,7 +86,7 @@ class ServerApplication:
 
     def rainParser(self, msg):
         rain_msg = json.loads(msg.payload)
-        self.rain = int(msg.payload)
+        self.rain = msg.payload
     
     def orderParser(self, msg):
         order_msg = json.loads(msg.payload)

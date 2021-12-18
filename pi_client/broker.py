@@ -115,16 +115,16 @@ class ServerApplication:
             "is_open": self.is_open,
             "is_lock": self.is_lock
         }
-        if self.distance > 10 and not self.is_open:
-            print("문이 정보와 달라 여는 중!!!!!!!!!!!!!!!")
-            res["is_open"] = True
-            res["is_lock"] = False
-            return res
-        if self.distance <= 10 and self.is_open:
-            print("문이 정보와 달라 닫는 중!!!!!!!!!!!!!!!")
-            res["is_open"] = False
-            res["is_lock"] = False
-            return res
+        # if self.distance > 10 and not self.is_open:
+        #     print("문이 정보와 달라 여는 중!!!!!!!!!!!!!!!")
+        #     res["is_open"] = True
+        #     res["is_lock"] = False
+        #     return res
+        # if self.distance <= 10 and self.is_open:
+        #     print("문이 정보와 달라 닫는 중!!!!!!!!!!!!!!!")
+        #     res["is_open"] = False
+        #     res["is_lock"] = False
+        #     return res
         if self.is_person:
             print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False

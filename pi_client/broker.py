@@ -195,13 +195,12 @@ class ServerApplication:
             "is_open": res["is_open"]
         }
 
-        # if res["is_open"] != self.is_open:
-        self.client.publish("control/moter", json.dumps(openMsg))
-        self.is_open = res["is_open"]
-        # if res["is_lock"] != self.is_lock:
-        #     if not self.is_open:
-        self.client.publish("control/lock", json.dumps(lockMsg))
-        self.is_lock = res["is_lock"]
+        if res["is_open"] != self.is_open:
+            self.client.publish("control/moter", json.dumps(openMsg))
+            self.is_open = res["is_open"]
+        if res["is_lock"] != self.is_loc:
+            self.client.publish("control/lock", json.dumps(lockMsg))
+            self.is_lock = res["is_lock"]
         # detect!!!!!!!!!!!!!!!!!!
 
         # if res["is_open"] == True:

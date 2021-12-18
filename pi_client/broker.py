@@ -21,8 +21,8 @@ class ServerApplication:
         self.temp = 0
         self.hum = 0
         self.rain = None
-        self.temp_default = 30.0
-        self.hum_default = 50.0
+        self.temp_default = 23.0
+        self.hum_default = 40.0
         self.sms = False
         self.time = None
 

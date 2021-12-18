@@ -24,14 +24,14 @@ class ServerApplication:
         self.temp_default = 30.0
         self.hum_default = 50.0
         self.sms = False
-        self.time = datetime.datetime.now()
+        self.time = None
 
     def getClient(self):
         client = mqtt.Client()
 
         def on_connect(client, userdata, flags, rc):
             print("connected with result code " + str(rc))
-            # client.subscribe("sensor/distance")
+            client.subscribe("sensor/distance")
             client.subscribe("sensor/temp_hum")
             client.subscribe("sensor/detect")
             client.subscribe("sensor/rain")
@@ -39,17 +39,17 @@ class ServerApplication:
             client.subscribe("sensor/wish")
 
         def on_message(client, userdata, msg):
-            # if msg.topic == 'sensor/distance':
-            #     self.distanceParser(msg)
+            if msg.topic == 'sensor/distance':
+                self.distanceParser(msg)
             if msg.topic == 'sensor/temp_hum':
                 self.tempParser(msg)
             if msg.topic == 'sensor/detect':
                 self.detectParser(msg)
-            elif msg.topic == 'sensor/rain':
+            if msg.topic == 'sensor/rain':
                 self.rainParser(msg)
-            elif msg.topic == 'sensor/user':
+            if msg.topic == 'sensor/user':
                 self.orderParser(msg)
-            elif msg.topic == 'sensor/wish':
+            if msg.topic == 'sensor/wish':
                 self.wishParser(msg)
             print(f"[{msg.topic}] sub : {msg.payload}")
             self.motorControl()
@@ -126,6 +126,7 @@ class ServerApplication:
         #     res["is_lock"] = False
         #     return res
         if self.is_person:
+            self.time = None
             print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False
             res["is_lock"] = True
@@ -134,6 +135,7 @@ class ServerApplication:
                 self.sms = True
             return res
         if self.open_order is not None:
+            self.time = None
             print(self.open_order)
             if self.open_order:
                 print("명령으로 인해 여는 중###########")
@@ -146,35 +148,50 @@ class ServerApplication:
             self.open_order = None
             return res
         if self.rain and self.rain > 40:
+            self.time = None
             print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.temp_default + 5 < self.temp:
-            print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
+            self.time = None
+            print("사용자 온도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         if self.hum_default + 5 < self.hum:
-            print("사용자 설정 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
+            self.time = None
+            print("사용자 습도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         if self.temp_default - 5 > self.temp:
-            print("사용자 설정 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
+            self.time = None
+            print("사용자 온도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.hum_default - 5 > self.hum:
-            print("사용자 설정 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
+            self.time = None
+            print("사용자 습도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
-        # else:
-        #     self.time = datetime.datetime.now()
-        #     print("환기 중%%%%%%%%%%%%%%%%")
-        #     res["is_open"] = True
-        #     res["is_lock"] = False
+        else:
+            now = datetime.datetime.now()
+            if self.time is None:
+                self.time = now
+                print("환기 시작%%%%%%%%%%%%%%%%")
+                res["is_open"] = True
+                res["is_lock"] = False
+            else:
+                date_diff = now - self.time
+                if (date_diff.seconds/60) >= 60:
+                    print("환기 종료%%%%%%%%%%%%%%%%")
+                    res["is_open"] = False
+                    res["is_lock"] = False
+                    self.time = None
+
         return res
 
     def motorControl(self):
@@ -185,8 +202,7 @@ class ServerApplication:
         openMsg = {
             "is_open": res["is_open"]
         }
-        
-        # detect!!!!!!!!!!!!!!!!!!
+
         # if res["is_open"] != self.is_open:
         self.client.publish("control/moter", json.dumps(openMsg))
         self.is_open = res["is_open"]

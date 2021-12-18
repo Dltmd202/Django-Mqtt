@@ -126,7 +126,6 @@ class ServerApplication:
         #     res["is_lock"] = False
         #     return res
         if self.is_person:
-            self.time = None
             print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False
             res["is_lock"] = True
@@ -135,7 +134,6 @@ class ServerApplication:
                 self.sms = True
             return res
         if self.open_order is not None:
-            self.time = None
             print(self.open_order)
             if self.open_order:
                 print("명령으로 인해 여는 중###########")
@@ -148,31 +146,26 @@ class ServerApplication:
             self.open_order = None
             return res
         if self.rain and self.rain > 40:
-            self.time = None
             print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.temp_default + 5 < self.temp:
-            self.time = None
             print("사용자 온도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         if self.hum_default + 5 < self.hum:
-            self.time = None
             print("사용자 습도 정보로 인해 여는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = True
             res["is_lock"] = False
             return res
         if self.temp_default - 5 > self.temp:
-            self.time = None
             print("사용자 온도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False
             return res
         if self.hum_default - 5 > self.hum:
-            self.time = None
             print("사용자 습도 정보로 인해 닫는 중%%%%%%%%%%%%%%%%")
             res["is_open"] = False
             res["is_lock"] = False

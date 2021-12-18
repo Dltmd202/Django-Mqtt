@@ -85,7 +85,7 @@ class ServerApplication:
         self.is_person = detct_msg['detected']
 
     def rainParser(self, msg):
-        # rain_msg = json.loads(msg.payload)
+        rain_msg = json.loads(msg.payload)
         self.rain = int(msg.payload)
     
     def orderParser(self, msg):
@@ -101,8 +101,8 @@ class ServerApplication:
     def sendSms(self):
         sms = {
             'message': {
-                'to': '01037065337',
-                'from': '01077530901',
+                'to': '01087654321',
+                'from': '01012345678',
                 'text': f'현재 스마트 창문이 침입자를 감지하여 창문을 닫았습니다.'
             }
         }
@@ -115,23 +115,23 @@ class ServerApplication:
             "is_open": self.is_open,
             "is_lock": self.is_lock
         }
-        # if self.distance > 10 and not self.is_open:
-        #     print("문이 정보와 달라 여는 중!!!!!!!!!!!!!!!")
-        #     res["is_open"] = True
-        #     res["is_lock"] = False
-        #     return res
-        # if self.distance <= 10 and self.is_open:
-        #     print("문이 정보와 달라 닫는 중!!!!!!!!!!!!!!!")
-        #     res["is_open"] = False
-        #     res["is_lock"] = False
-        #     return res
+        if self.distance > 10 and not self.is_open:
+            print("문이 정보와 달라 여는 중!!!!!!!!!!!!!!!")
+            res["is_open"] = True
+            res["is_lock"] = False
+            return res
+        if self.distance <= 10 and self.is_open:
+            print("문이 정보와 달라 닫는 중!!!!!!!!!!!!!!!")
+            res["is_open"] = False
+            res["is_lock"] = False
+            return res
         if self.is_person:
             print("외부 접근으로 인해 닫는 중@@@@@@@@@@@@@@@@")
             res["is_open"] = False
             res["is_lock"] = True
-            # if not self.sms:
-            #     self.sendSms()
-            #     self.sms = True
+            if not self.sms:
+                self.sendSms()
+                self.sms = True
             return res
         if self.open_order is not None:
             print(self.open_order)

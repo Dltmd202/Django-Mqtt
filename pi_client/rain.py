@@ -52,7 +52,7 @@ class Rain:
                     "status": 1
                 })
                 print(f"[sensor/rain] publish : {msg}")
-                self.client.publish("sensor/rain", str(self.rainlevel))
+                self.client.publish("sensor/rain", msg)
                 time.sleep(2)
         except KeyboardInterrupt:
             print("Finished rain")

@@ -145,7 +145,7 @@ class ServerApplication:
                 res["is_lock"] = False
             self.open_order = None
             return res
-        if self.rain and self.rain > 40:
+        if self.rain:
             print("우천으로 인해 닫는 중$$$$$$$$$$$$$$")
             res["is_open"] = False
             res["is_lock"] = False
